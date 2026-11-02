@@ -1,6 +1,6 @@
 Project:     Haq (हक़) — AI consumer-rights agent for India
 Event:       BharatCode Build League 2026
-Team:        AlphaFire
+Team:        AlphaFire — Kavay Khurana (@Kavaykhurana), Harshit Atal (@harshit174)
 Repository:  https://github.com/Kavaykhurana/bharatcode
 Live demo:   https://haq-glqi.onrender.com
 Category:    AI agents · Productivity & automation · Chatbots & assistants

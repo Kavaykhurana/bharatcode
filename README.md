@@ -254,6 +254,7 @@ Built by **Team AlphaFire** for the **BharatCode Build League 2026**.
 | Member | GitHub |
 |---|---|
 | Kavay Khurana | [@Kavaykhurana](https://github.com/Kavaykhurana) |
+| Harshit Atal | [@harshit174](https://github.com/harshit174) |
 
 If you think every consumer should know where to complain, **star the repository**. It helps others find it.
 
@@ -263,4 +264,4 @@ Haq provides legal information, not legal advice. Rules and limits are curated f
 
 ## License
 
-[MIT](LICENSE) © 2026 Kavay Khurana and Team AlphaFire
+[MIT](LICENSE) © 2026 Kavay Khurana, Harshit Atal and Team AlphaFire
