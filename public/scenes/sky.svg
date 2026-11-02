@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+<title>Cerulean sky</title>
+<defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.07 0"/>
+  </filter>
+  <filter id="brush" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="3" seed="15" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="softer" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#006ea6"/>
+    <stop offset="0.6" stop-color="#0081c0"/>
+    <stop offset="1" stop-color="#3f9fd0"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<ellipse cx="288.1" cy="354.5" rx="82.8" ry="52" fill="#ffffff" opacity="0.11" filter="url(#softer)"/>
+<ellipse cx="410.8" cy="352.9" rx="152.8" ry="44.4" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="371.7" cy="363.1" rx="212" ry="31" fill="#ffffff" opacity="0.16" filter="url(#softer)"/>
+<ellipse cx="235.7" cy="363.6" rx="103.1" ry="41.6" fill="#ffffff" opacity="0.18" filter="url(#softer)"/>
+<ellipse cx="403.8" cy="392.4" rx="132.1" ry="63.8" fill="#ffffff" opacity="0.12" filter="url(#softer)"/>
+<ellipse cx="266.3" cy="362.4" rx="114.6" ry="41.2" fill="#ffffff" opacity="0.19" filter="url(#softer)"/>
+<ellipse cx="1292.1" cy="893.2" rx="178.7" ry="42.5" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="1337.2" cy="899.8" rx="120.3" ry="48.1" fill="#ffffff" opacity="0.11" filter="url(#softer)"/>
+<ellipse cx="1352.7" cy="918.5" rx="91.4" ry="48.5" fill="#ffffff" opacity="0.20" filter="url(#softer)"/>
+<ellipse cx="1414.9" cy="911" rx="178.1" ry="35.8" fill="#ffffff" opacity="0.16" filter="url(#softer)"/>
+<ellipse cx="1306.3" cy="924.3" rx="168.9" ry="47.6" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="774" cy="661" rx="88.6" ry="39.2" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="704.7" cy="667.8" rx="126.3" ry="37.1" fill="#ffffff" opacity="0.14" filter="url(#softer)"/>
+<ellipse cx="567.2" cy="690.8" rx="205.4" ry="68.2" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="787.3" cy="656.8" rx="120.5" ry="68.6" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="578.4" cy="888.9" rx="142.2" ry="35.5" fill="#ffffff" opacity="0.13" filter="url(#softer)"/>
+<ellipse cx="738.9" cy="895.8" rx="81.3" ry="31.8" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="696.1" cy="897.4" rx="120.6" ry="33.9" fill="#ffffff" opacity="0.20" filter="url(#softer)"/>
+<ellipse cx="548.9" cy="452.8" rx="163.4" ry="68.8" fill="#ffffff" opacity="0.15" filter="url(#softer)"/>
+<ellipse cx="665.1" cy="445.1" rx="125" ry="31.4" fill="#ffffff" opacity="0.18" filter="url(#softer)"/>
+<ellipse cx="604.3" cy="465.8" rx="171.2" ry="38" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="663.6" cy="607.4" rx="204.5" ry="63.2" fill="#ffffff" opacity="0.14" filter="url(#softer)"/>
+<ellipse cx="570.1" cy="607.6" rx="113.9" ry="38.3" fill="#ffffff" opacity="0.11" filter="url(#softer)"/>
+<ellipse cx="771.3" cy="602" rx="87.2" ry="67.1" fill="#ffffff" opacity="0.15" filter="url(#softer)"/>
+<ellipse cx="800.3" cy="615.1" rx="206.1" ry="56.2" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<ellipse cx="1253.1" cy="642.9" rx="160.1" ry="67.8" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="1221" cy="620" rx="206.1" ry="42.6" fill="#ffffff" opacity="0.13" filter="url(#softer)"/>
+<ellipse cx="1201.5" cy="636.5" rx="192.2" ry="43.5" fill="#ffffff" opacity="0.13" filter="url(#softer)"/>
+<ellipse cx="903.9" cy="859.3" rx="86.2" ry="66" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="905.5" cy="859.3" rx="88.5" ry="36.7" fill="#ffffff" opacity="0.16" filter="url(#softer)"/>
+<ellipse cx="809.7" cy="863.2" rx="209.8" ry="38.7" fill="#ffffff" opacity="0.08" filter="url(#softer)"/>
+<ellipse cx="894.4" cy="826.6" rx="202.7" ry="34.6" fill="#ffffff" opacity="0.18" filter="url(#softer)"/>
+<ellipse cx="861" cy="869.8" rx="157.1" ry="65.1" fill="#ffffff" opacity="0.10" filter="url(#softer)"/>
+<ellipse cx="1228.9" cy="515.3" rx="91.1" ry="57.8" fill="#ffffff" opacity="0.09" filter="url(#softer)"/>
+<ellipse cx="1143.8" cy="506.2" rx="188.4" ry="31.7" fill="#ffffff" opacity="0.09" filter="url(#softer)"/>
+<ellipse cx="1220.2" cy="538.6" rx="121.6" ry="43.9" fill="#ffffff" opacity="0.09" filter="url(#softer)"/>
+<ellipse cx="1239.6" cy="516" rx="108.7" ry="69.1" fill="#ffffff" opacity="0.13" filter="url(#softer)"/>
+<ellipse cx="1191.3" cy="536.1" rx="136" ry="33.1" fill="#ffffff" opacity="0.19" filter="url(#softer)"/>
+<ellipse cx="1200.8" cy="511.6" rx="219.9" ry="46.6" fill="#ffffff" opacity="0.17" filter="url(#softer)"/>
+<rect width="1600" height="900" filter="url(#grain)"/>
+</svg>

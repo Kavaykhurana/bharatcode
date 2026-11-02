@@ -22,7 +22,7 @@ Haq (हक़) is an AI consumer-rights agent for India. Describe your problem 
 - [ ] Merge this branch into `main` so the default branch shows the README and `BharatCode.txt`
 - [ ] Add the GitHub repo description: `AI consumer-rights agent for India — right forum, ready draft, dated escalation plan. Built on the BharatCode API.`
 - [ ] Add topics: `bharatcode`, `ai-agent`, `consumer-rights`, `india`, `nextjs`, `legal-tech`, `hindi`, `upi`
-- [ ] Set the repo's social preview image to `docs/hero.png` (Settings → General → Social preview)
+- [ ] Set the repo's social preview image to `docs/hero.jpg` (Settings → General → Social preview)
 - [ ] Deploy to Vercel with `BHARATCODE_API_KEY` set, then add the live URL to the repo "Website" field and to the README header
 - [ ] Run one real end-to-end test on the live URL with your actual BharatCode key
 - [ ] Record the demo video (script below) and add the link to the README
@@ -34,11 +34,11 @@ Haq (हक़) is an AI consumer-rights agent for India. Describe your problem 
 | Time | Shot | Say |
 |---|---|---|
 | 0:00–0:15 | Face cam or title card | "₹4,500 debited on UPI, never credited, and the bank keeps saying wait. Most Indians don't know RBI rules owe them ₹100 a day for this. Haq fixes that." |
-| 0:15–0:35 | Click **💸 UPI stuck**, then **Find my remedy** | "I describe the problem in plain words. Watch the agent: it understands the complaint with the BharatCode model, finds the forum and the law, and builds my timeline." |
+| 0:15–0:35 | Click **UPI transfer stuck**, then **Find my remedy** | "I describe the problem in plain words. Watch the agent: it understands the complaint with the BharatCode model, finds the forum and the law, and builds my timeline." |
 | 0:35–1:00 | Scroll the case file, ladder and deadlines | "It pulled out the bank, amount, date and UTR. It tells me exactly where to go — bank first, then the RBI Ombudsman — with real dates, and it already calculated the compensation I'm owed." |
-| 1:00–1:25 | Switch to **हिन्दी**, generate a **Legal notice** | "Need it in Hindi? One click. The legal notice streams live, cites only real provisions, and leaves blanks instead of inventing facts." |
+| 1:00–1:25 | Switch to **हिन्दी**, choose **Legal notice** and write the draft | "Need it in Hindi? One click. The legal notice streams live, cites only real provisions, and leaves blanks instead of inventing facts." |
 | 1:25–1:40 | Click **Add reminders to calendar** and **WhatsApp** | "Escalation reminders go straight into my calendar, and I can share the plan on WhatsApp." |
-| 1:40–1:55 | Run the **🚨 OTP fraud** example | "For fraud it switches to emergency mode — call 1930 now, with the zero-liability deadline counted in working days." |
+| 1:40–1:55 | Run the **OTP fraud** example | "For fraud it switches to emergency mode — call 1930 now, with the zero-liability deadline counted in working days." |
 | 1:55–2:05 | GitHub repo | "Open source, built on the BharatCode API. Star it if you think every Indian should know their haq." |
 
 **Recording tips:** use a 1280×800 browser window at 125% zoom, record with QuickTime or OBS, keep it under 2:30, and upload it to YouTube as unlisted.
