@@ -1,0 +1,42 @@
+Project:     Haq (हक़) — AI consumer-rights agent for India
+Event:       BharatCode Build League 2026
+Team:        AlphaFire
+Repository:  https://github.com/Kavaykhurana/bharatcode
+Category:    AI agents · Productivity & automation · Chatbots & assistants
+
+WHAT IT DOES
+Describe a consumer problem in English, Hindi or Hinglish — a stuck UPI transfer,
+a defective Flipkart order, a cancelled flight, a rejected insurance claim, an OTP
+fraud, a delayed flat. Haq:
+  1. Extracts the facts (company, amount, date, UTR / order / PNR / policy numbers).
+  2. Routes the case to the correct Indian forum and escalation ladder
+     (bank → RBI Ombudsman, platform → National Consumer Helpline → e-Daakhil,
+     1930 / cybercrime.gov.in, Bima Bharosa → Insurance Ombudsman, AirSewa, RERA).
+  3. Cites the provisions that apply (RBI TAT circular, RBI 2017 liability circular,
+     Consumer Protection Act 2019, E-Commerce Rules 2020, DGCA CAR, RERA s.18).
+  4. Computes a dated plan: when to escalate, zero-liability windows, ₹100/day
+     compensation accrued, 2-year limitation, and the right Consumer Commission tier.
+  5. Drafts a ready-to-send complaint, legal notice or ombudsman complaint in English
+     or Hindi, and exports reminders to the calendar (.ics).
+
+HOW THE BHARATCODE MODEL API IS USED
+  - Intake agent: chat completion (temperature 0) → strict JSON, validated with zod,
+    repaired field-by-field if the model drifts.        lib/agent.ts, lib/prompts.ts
+  - Drafting agent: streamed chat completion, grounded only in the curated law file;
+    <think> blocks are filtered from the stream.        app/api/draft/route.ts
+  - Client: dependency-free OpenAI-compatible client with timeouts, retry and
+    graceful offline fallback.                           lib/bharatcode.ts
+  Endpoint: BHARATCODE_BASE_URL (default https://bharatcode.ai/api/model/v1)
+  Model:    BHARATCODE_MODEL    (default qwen-3.8-27b)
+
+DESIGN PRINCIPLE
+The model reads and writes; it never decides where you go. Forums, helplines,
+timelines and statutes come from a human-reviewed knowledge base (lib/knowledge.ts),
+so the agent cannot hallucinate a helpline number or a non-existent section.
+
+RUN
+  npm install && cp .env.example .env.local && npm run dev
+  (works without a key in offline mode; add BHARATCODE_API_KEY for AI mode)
+
+No secrets, tokens or private user data are stored in this repository.
+Haq provides legal information, not legal advice.
