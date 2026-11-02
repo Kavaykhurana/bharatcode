@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white)](tsconfig.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3f6b3b?style=flat-square)](LICENSE)
 
-[**Try it live**](https://haq-glqi.onrender.com) · [How it works](#how-it-works) · [Run locally](#getting-started) · [API](#api-reference)
+[**Try it live**](https://haq-glqi.onrender.com) · [How it works](#how-it-works) · [Run locally](#getting-started)
 
 </div>
 
@@ -69,12 +69,6 @@ flowchart LR
     F -. unavailable .-> I[Templates] --> G
 ```
 
-1. **Intake agent.** The BharatCode model, at temperature 0, turns the complaint into structured JSON.
-2. **Validation.** The JSON is parsed defensively and checked against a strict zod schema. An invalid field is repaired individually rather than discarding the whole result.
-3. **Rules file.** [`lib/knowledge.ts`](lib/knowledge.ts) is a typed, reviewed record of forums, escalation order, waiting periods, statutes and evidence lists.
-4. **Planner.** [`lib/planner.ts`](lib/planner.ts) holds pure, unit-tested functions for every date and jurisdiction calculation.
-5. **Drafting agent.** The BharatCode model, streamed, writes the document from the extracted facts. It may cite only the provisions supplied for that category, and it leaves blanks instead of guessing.
-
 ## Coverage
 
 | Problem | First stop | Escalation path | Key provision |
@@ -101,151 +95,20 @@ flowchart LR
 
 ## Getting started
 
-**Prerequisites:** Node.js 18.18 or later.
+Requires Node.js 18.18 or later.
 
 ```bash
 git clone https://github.com/Kavaykhurana/bharatcode.git
-```
-
-```bash
 cd bharatcode && npm install
+cp .env.example .env.local   # add BHARATCODE_API_KEY to enable the AI agents
+npm run dev                  # http://localhost:3000
 ```
 
-```bash
-cp .env.example .env.local
-```
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000). Without an API key, Haq runs in offline mode.
-
-### Environment variables
-
-| Variable | Required | Default |
-|---|---|---|
-| `BHARATCODE_API_KEY` | For AI mode | — |
-| `BHARATCODE_BASE_URL` | No | `https://bharatcode.ai/api/model/v1` |
-| `BHARATCODE_MODEL` | No | `qwen-3.8-27b` |
-| `RATE_LIMIT_PER_MINUTE` | No | `20` |
-
-Visitors can also supply their own key from the **API key** menu in the app. It is stored only in their browser and is never logged on the server.
+Without an API key, Haq runs in offline mode.
 
 ## Deployment
 
-Production runs on **Render** and redeploys automatically on every push to `main`.
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Kavaykhurana/bharatcode)
-
-The Blueprint in [`render.yaml`](render.yaml) configures the build, start command and health check (`/api/health`). Render only asks for `BHARATCODE_API_KEY`.
-
-> On Render's free tier, the first request after a period of inactivity can take up to a minute while the instance wakes.
-
-## API reference
-
-<details>
-<summary><code>GET /api/health</code> — liveness probe</summary>
-
-<br />
-
-```json
-{ "status": "ok", "mode": "ai", "time": "2026-11-02T15:41:53.000Z" }
-```
-
-`mode` is `ai` when a server key is configured and `offline` otherwise. The key itself is never exposed.
-
-</details>
-
-<details>
-<summary><code>POST /api/analyze</code> — classify a complaint and build the plan</summary>
-
-<br />
-
-```json
-{ "story": "On 28 Oct I sent ₹4,500 via PhonePe…", "language": "en", "today": "2026-11-02" }
-```
-
-The response is streamed NDJSON: `step` events as each stage runs, then one `result` event containing the plan (`intake`, `steps`, `deadlines`, `laws`, `evidence`, `commission`, `mode`).
-
-</details>
-
-<details>
-<summary><code>POST /api/draft</code> — stream a document</summary>
-
-<br />
-
-```json
-{
-  "intake": { "category": "ecommerce", "opposite_party": "Flipkart", "amount_inr": 18999 },
-  "story": "Ordered a phone on Flipkart…",
-  "docType": "legal_notice",
-  "language": "en",
-  "complainant": { "name": "Kavay Khurana", "city": "New Delhi" }
-}
-```
-
-`docType` is one of `company_complaint`, `legal_notice` or `regulator_complaint`. The response is streamed plain text, and the `X-Haq-Mode` header reports `ai` or `offline`.
-
-</details>
-
-All routes validate input. They return `400` for invalid input and `429` with `Retry-After` when rate-limited.
-
-## Project structure
-
-<details>
-<summary>Expand</summary>
-
-```
-app/
-├── api/
-│   ├── analyze/route.ts   Intake → rules → planner (streamed NDJSON)
-│   ├── draft/route.ts     Drafting agent with template fallback (streamed)
-│   └── health/route.ts    Liveness probe
-├── fonts.ts               Font loading via next/font
-├── globals.css            Design tokens and components
-└── layout.tsx · page.tsx
-components/
-└── HaqApp.tsx             Client UI
-lib/
-├── knowledge.ts           Rules file — forums, ladders, statutes, evidence
-├── bharatcode.ts          BharatCode API client (timeouts, retry, SSE)
-├── agent.ts               Classification, validation and repair
-├── prompts.ts             Agent prompts
-├── planner.ts             Dates, working days, limitation, jurisdiction
-├── heuristics.ts          Offline classifier and extractors
-├── json.ts                Defensive JSON parsing and stream filtering
-├── templates.ts           Bilingual document templates
-├── ics.ts                 Calendar export
-└── ratelimit.ts           Per-IP rate limiting
-tests/core.test.ts         Unit tests
-render.yaml                Render Blueprint
-```
-
-</details>
-
-## Testing
-
-```bash
-npm run typecheck && npm test
-```
-
-The 23 unit tests cover the planner, routing, extractors for Indian amounts, dates and reference numbers, JSON repair, the streaming filter, calendar export and templates. CI runs the typecheck, tests and a production build on every push.
-
-## Security and privacy
-
-- No database. Complaints are processed per request and never stored.
-- No secrets in the repository. Keys live only in environment variables.
-- Input limits, schema validation and per-IP rate limiting on every route.
-- Strict security headers: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`.
-
-## Roadmap
-
-- [ ] Voice input in Indian languages
-- [ ] Tamil, Telugu, Bengali and Marathi
-- [ ] Bill or screenshot upload with automatic reference extraction
-- [ ] State-wise RERA portals and electricity ombudsmen
-- [ ] Case tracking with reminders
+Live on Render at **[haq-glqi.onrender.com](https://haq-glqi.onrender.com)**, auto-deployed from `main` via [`render.yaml`](render.yaml).
 
 ## Team
 
