@@ -8,6 +8,7 @@ Everything needed to submit Haq and push for community votes. The deadline is **
 |---|---|
 | Project name | `Haq — AI consumer-rights agent for India` |
 | Repository link | `https://github.com/Kavaykhurana/bharatcode` (main repo link only, not a file or branch) |
+| Live demo | `https://haq-glqi.onrender.com` |
 | `BharatCode.txt` | ✅ In the repository root |
 
 ### Short description (925 characters, under the 1,000 limit)
@@ -19,11 +20,13 @@ Haq (हक़) is an AI consumer-rights agent for India. Describe your problem 
 ## 2. Pre-submit checklist
 
 - [ ] Repository is **public**
-- [ ] Merge this branch into `main` so the default branch shows the README and `BharatCode.txt`
+- [x] README and `BharatCode.txt` are on `main`
 - [ ] Add the GitHub repo description: `AI consumer-rights agent for India — right forum, ready draft, dated escalation plan. Built on the BharatCode API.`
 - [ ] Add topics: `bharatcode`, `ai-agent`, `consumer-rights`, `india`, `nextjs`, `legal-tech`, `hindi`, `upi`
 - [ ] Set the repo's social preview image to `docs/hero.jpg` (Settings → General → Social preview)
-- [ ] Deploy to Vercel with `BHARATCODE_API_KEY` set, then add the live URL to the repo "Website" field and to the README header
+- [x] Deployed on Render: https://haq-glqi.onrender.com (auto-deploys from `main`)
+- [ ] Add `BHARATCODE_API_KEY` in Render → haq → Environment (until then the app runs in offline mode)
+- [ ] Add the live URL to the repo "Website" field
 - [ ] Run one real end-to-end test on the live URL with your actual BharatCode key
 - [ ] Record the demo video (script below) and add the link to the README
 - [ ] Add your teammate to the **Team AlphaFire** section of the README
@@ -57,7 +60,7 @@ Most Indians don't know this:
 
 So we built Haq (हक़) for the #BharatCodeBuildLeague — describe your problem in Hindi or English, and an AI agent tells you exactly where to complain, drafts the complaint/legal notice, and gives you a dated escalation plan.
 
-Try it: <live URL>
+Try it: https://haq-glqi.onrender.com
 ⭐ Star it: https://github.com/Kavaykhurana/bharatcode
 Vote for us on bharatcode.ai 🙏
 ```
@@ -67,7 +70,7 @@ Vote for us on bharatcode.ai 🙏
 ```
 UPI ka paisa atka hai? Flipkart refund nahi de raha? Flight cancel ho gayi?
 Humne Haq banaya hai — apni problem Hindi/English mein likho, AI batayega kahan complaint karni hai aur complaint letter bhi likh dega. Free hai.
-<live URL>
+https://haq-glqi.onrender.com
 Hackathon ke liye hai — GitHub pe ⭐ aur bharatcode.ai pe vote kar do please 🙏
 https://github.com/Kavaykhurana/bharatcode
 ```

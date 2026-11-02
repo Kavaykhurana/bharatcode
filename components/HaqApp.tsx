@@ -6,6 +6,7 @@ import { KNOWLEDGE } from "@/lib/knowledge";
 import type { AnalyzeEvent, CasePlan, DocType, Language } from "@/lib/types";
 
 const REPO_URL = "https://github.com/Kavaykhurana/bharatcode";
+const LIVE_URL = "https://haq-glqi.onrender.com";
 
 const EXAMPLES: { label: string; labelHi: string; story: string }[] = [
   {
@@ -562,7 +563,7 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
     () =>
       `My consumer complaint plan from Haq (${plan.category.label}):\n${plan.steps
         .map((s) => `${s.order}) ${s.title}${s.links[0] ? ` — ${s.links[0].url}` : ""}`)
-        .join("\n")}\n\nMake yours: ${REPO_URL}`,
+        .join("\n")}\n\nMake yours: ${LIVE_URL}`,
     [plan]
   );
 

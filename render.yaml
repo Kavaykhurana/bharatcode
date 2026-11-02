@@ -1,0 +1,26 @@
+# Render Blueprint — one-click deploy of Haq.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: haq
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: BHARATCODE_BASE_URL
+        value: https://bharatcode.ai/api/model/v1
+      - key: BHARATCODE_MODEL
+        value: qwen-3.8-27b
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "20"
+      - key: BHARATCODE_API_KEY
+        sync: false # prompted in the Render dashboard; never committed
