@@ -29,7 +29,7 @@ Haq (हक़) is an AI consumer-rights agent for India. Describe your problem 
 - [ ] Add the live URL to the repo "Website" field
 - [ ] Run one real end-to-end test on the live URL with your actual BharatCode key
 - [ ] Record the demo video (script below) and add the link to the README
-- [ ] Add your teammate to the **Team AlphaFire** section of the README
+- [x] Team AlphaFire (Kavay Khurana, Harshit Atal) listed in the README
 - [ ] Submit on bharatcode.ai/hackathon, then confirm on Unstop
 
 ## 3. Demo video script (≈ 2 minutes)
