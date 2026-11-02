@@ -23,7 +23,7 @@ Haq (हक़) is an AI consumer-rights agent for India. Describe your problem 
 - [x] README and `BharatCode.txt` are on `main`
 - [ ] Add the GitHub repo description: `AI consumer-rights agent for India — right forum, ready draft, dated escalation plan. Built on the BharatCode API.`
 - [ ] Add topics: `bharatcode`, `ai-agent`, `consumer-rights`, `india`, `nextjs`, `legal-tech`, `hindi`, `upi`
-- [ ] Set the repo's social preview image to `docs/hero.jpg` (Settings → General → Social preview)
+- [ ] Set the repo's social preview image to `docs/social-preview.jpg` (Settings → General → Social preview)
 - [x] Deployed on Render: https://haq-glqi.onrender.com (auto-deploys from `main`)
 - [ ] Add `BHARATCODE_API_KEY` in Render → haq → Environment (until then the app runs in offline mode)
 - [ ] Add the live URL to the repo "Website" field
