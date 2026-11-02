@@ -13,6 +13,11 @@ Describe a problem in your own words. Haq names the right forum, drafts the comp
 <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-0077b3?logo=typescript&logoColor=white" />
 <img alt="BharatCode model API" src="https://img.shields.io/badge/LLM-BharatCode_API-282834" />
 <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-3f6b3b" /></a>
+<a href="https://haq-glqi.onrender.com"><img alt="Live on Render" src="https://img.shields.io/badge/live-haq--glqi.onrender.com-41a1cf?logo=render&logoColor=white" /></a>
+</p>
+
+<p>
+<a href="https://haq-glqi.onrender.com"><strong>Open the live app →</strong></a>
 </p>
 
 <p>
@@ -37,6 +42,8 @@ A UPI transfer leaves your account and never arrives. A phone is dead on deliver
 People lose these remedies for three ordinary reasons. They don't know **where** to complain, or in what order. They don't know **what** to write. And they don't know **when** a deadline is about to close. Haq answers all three in under a minute, in English or Hindi.
 
 Haq was built by Team AlphaFire for the **BharatCode Build League 2026**, on the **BharatCode model API**.
+
+**Live:** [haq-glqi.onrender.com](https://haq-glqi.onrender.com). It is hosted on Render's free tier, so the first request after a period of inactivity can take up to a minute while the instance wakes.
 
 ## What Haq produces
 
@@ -140,7 +147,17 @@ Open `http://localhost:3000`. Without a key Haq runs in **offline mode**, so you
 
 ### Deploy
 
-[**Deploy on Vercel**](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FKavaykhurana%2Fbharatcode&env=BHARATCODE_API_KEY&envDescription=BharatCode%20model%20API%20key&project-name=haq). Set `BHARATCODE_API_KEY` when prompted. There is no database, no authentication and no other service to configure.
+Haq runs in production on **Render**, defined in [`render.yaml`](render.yaml): a Node web service in the Singapore region, with a health check at `/api/health` and automatic redeploys on every push to `main`.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Kavaykhurana/bharatcode)
+
+To run your own copy:
+
+1. Click **Deploy to Render** above and sign in.
+2. Paste your `BHARATCODE_API_KEY` when Render asks for it. Every other setting is already in the Blueprint.
+3. Open the `onrender.com` URL Render gives you.
+
+There is no database, no authentication and no other service to configure. `GET /api/health` returns `{"status":"ok","mode":"ai"}` once a key is set, or `"mode":"offline"` without one.
 
 ### Scripts
 
@@ -152,6 +169,10 @@ Open `http://localhost:3000`. Without a key Haq runs in **offline mode**, so you
 | `npm test` | 23 Vitest unit tests: planner, routing, extractors, JSON repair, stream filter, iCalendar, templates |
 
 ## API reference
+
+### `GET /api/health`
+
+Liveness probe. It returns `status`, and a `mode` of `ai` or `offline` depending on whether the server has a model key. The key itself is never exposed.
 
 ### `POST /api/analyze`
 
@@ -202,6 +223,7 @@ Streams the document as plain text. The `X-Haq-Mode` header reports `ai` or `off
 app/
   api/analyze/route.ts   Intake → rules → planner, streamed as NDJSON
   api/draft/route.ts     Streaming drafting agent with template fallback
+  api/health/route.ts    Liveness probe used by Render
   fonts.ts               Fraunces, Inter and Noto Devanagari via next/font
   globals.css            Design tokens and components (literary editorial system)
   layout.tsx, page.tsx   Shell and metadata
@@ -220,6 +242,7 @@ lib/
   ratelimit.ts           Per-IP fixed-window limiter
 public/scenes/           Painted stand-in illustrations (SVG)
 tests/core.test.ts       Unit tests
+render.yaml              Render Blueprint (production deployment)
 ```
 
 ### Design

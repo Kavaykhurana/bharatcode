@@ -2,6 +2,7 @@ Project:     Haq (हक़) — AI consumer-rights agent for India
 Event:       BharatCode Build League 2026
 Team:        AlphaFire
 Repository:  https://github.com/Kavaykhurana/bharatcode
+Live demo:   https://haq-glqi.onrender.com
 Category:    AI agents · Productivity & automation · Chatbots & assistants
 
 WHAT IT DOES
@@ -37,6 +38,7 @@ so the agent cannot hallucinate a helpline number or a non-existent section.
 RUN
   npm install && cp .env.example .env.local && npm run dev
   (works without a key in offline mode; add BHARATCODE_API_KEY for AI mode)
+  Production: Render Web Service defined in render.yaml (auto-deploys from main)
 
 No secrets, tokens or private user data are stored in this repository.
 Haq provides legal information, not legal advice.
