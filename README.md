@@ -1,120 +1,107 @@
+<a href="https://haq-glqi.onrender.com"><img src="docs/banner.jpg" alt="Haq — Know where to complain. Get it drafted. Know when to escalate." width="100%" /></a>
+
 <div align="center">
 
-<img src="docs/hero.jpg" alt="Haq — Know where to complain. Get it drafted." width="100%" />
+**An AI consumer-rights agent for India, built on the BharatCode model API.**
 
-<h1>Haq · हक़</h1>
+[![Live demo](https://img.shields.io/badge/Live_demo-haq--glqi.onrender.com-0077b3?style=flat-square)](https://haq-glqi.onrender.com)
+[![CI](https://img.shields.io/github/actions/workflow/status/Kavaykhurana/bharatcode/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/Kavaykhurana/bharatcode/actions/workflows/ci.yml)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15-171717?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white)](tsconfig.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3f6b3b?style=flat-square)](LICENSE)
 
-<p><strong>A consumer-rights agent for India.</strong><br/>
-Describe a problem in your own words. Haq names the right forum, drafts the complaint, and tells you when to escalate.</p>
-
-<p>
-<a href="https://github.com/Kavaykhurana/bharatcode/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Kavaykhurana/bharatcode/actions/workflows/ci.yml/badge.svg" /></a>
-<img alt="Next.js 15" src="https://img.shields.io/badge/Next.js-15-171717?logo=next.js&logoColor=white" />
-<img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-0077b3?logo=typescript&logoColor=white" />
-<img alt="BharatCode model API" src="https://img.shields.io/badge/LLM-BharatCode_API-282834" />
-<a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-3f6b3b" /></a>
-<a href="https://haq-glqi.onrender.com"><img alt="Live on Render" src="https://img.shields.io/badge/live-haq--glqi.onrender.com-41a1cf?logo=render&logoColor=white" /></a>
-</p>
-
-<p>
-<a href="https://haq-glqi.onrender.com"><strong>Open the live app →</strong></a>
-</p>
-
-<p>
-<a href="#overview">Overview</a> ·
-<a href="#how-it-works">How it works</a> ·
-<a href="#coverage">Coverage</a> ·
-<a href="#getting-started">Getting started</a> ·
-<a href="#api-reference">API</a> ·
-<a href="#engineering-notes">Engineering notes</a>
-</p>
+[**Try it live**](https://haq-glqi.onrender.com) · [How it works](#how-it-works) · [Run locally](#getting-started) · [API](#api-reference)
 
 </div>
 
----
+<br />
 
-## Overview
+<img src="docs/screen-home.webp" alt="Haq home page" width="100%" />
 
-Every consumer in India has rights. Few know where to use them.
+## About
 
-A UPI transfer leaves your account and never arrives. A phone is dead on delivery and the return is refused. A flight is cancelled and the refund stalls. The protections already exist: the RBI requires a failed transfer to be reversed by the next day and pays **₹100 for every day of delay**. Fraud reported within **three working days** carries **zero liability**. Banks and insurers each have a free ombudsman, and the Consumer Commission charges **no fee** for claims up to ₹5 lakh.
+A UPI transfer leaves your account and never arrives. A phone is dead on delivery and the return is refused. A flight is cancelled and the refund stalls.
 
-People lose these remedies for three ordinary reasons. They don't know **where** to complain, or in what order. They don't know **what** to write. And they don't know **when** a deadline is about to close. Haq answers all three in under a minute, in English or Hindi.
+Indian law already protects people in these situations. The RBI owes you **₹100 a day** while a failed transfer stays unreversed. Fraud reported within **three working days** carries **zero liability**. Consumer Commission filing is **free** for claims up to ₹5 lakh. Most people never use these protections because they don't know where to complain, what to write, or when a deadline closes.
 
-Haq was built by Team AlphaFire for the **BharatCode Build League 2026**, on the **BharatCode model API**.
+**Haq** answers all three. Describe the problem in English, Hindi or Hinglish. Haq identifies the right forum, lays out the escalation path with real dates, cites the rules that apply, and drafts the complaint for you.
 
-**Live:** [haq-glqi.onrender.com](https://haq-glqi.onrender.com). It is hosted on Render's free tier, so the first request after a period of inactivity can take up to a minute while the instance wakes.
+## Features
 
-## What Haq produces
-
-| Output | Detail |
+| Capability | What it does |
 |---|---|
-| **Case file** | The company, amount, incident date and every UTR, order ID, PNR or policy number, extracted from free text in English, Hindi or Hinglish. |
-| **Escalation ladder** | The forums for this kind of case, in the order the rules require, with portals and helplines. The RBI Ombudsman, for example, will not hear a case the bank has not seen first. |
-| **Dates that matter** | When to escalate at each step, the zero-liability window counted in working days, the compensation already owed, the two-year limitation, and the Consumer Commission tier with jurisdiction. |
-| **The law on your side** | Only the provisions that apply, drawn from a reviewed rules file: RBI circulars, the Consumer Protection Act 2019, the E-Commerce Rules 2020, DGCA CARs, RERA and the ombudsman schemes. |
-| **A ready draft** | A complaint to the company, a legal notice, or text for the regulator's portal, streamed live. Wherever a fact is unknown, the draft leaves a bracketed blank instead of guessing. |
-| **Reminders** | One `.ics` file with every escalation date. Plus WhatsApp share, copy, download and print-to-PDF. |
+| **Understands plain language** | Extracts the company, amount, date and every UTR, order ID, PNR or policy number from free text in English, Hindi or Hinglish. |
+| **Routes to the right forum** | Builds the escalation ladder the rules require, e.g. bank → RBI Ombudsman → Consumer Commission, with portals and helplines. |
+| **Computes every deadline** | Escalation dates, the zero-liability window in working days, compensation already accrued, the two-year limitation, and the Commission tier with jurisdiction. |
+| **Cites only real law** | Provisions come from a reviewed rules file, never from the model, so helplines and sections cannot be invented. |
+| **Drafts the document** | A complaint to the company, a legal notice, or text for the regulator's portal, streamed live in English or Hindi. |
+| **Keeps you on schedule** | One-click calendar reminders (`.ics`) for every escalation date, plus WhatsApp share, copy, download and print-to-PDF. |
+| **Never goes dark** | If the model is unavailable, a rule-based classifier and templates take over, so the user still gets a complete plan. |
+
+## Screenshots
+
+<img src="docs/screen-plan.webp" alt="Case file with escalation ladder, deadlines and evidence checklist for a failed UPI transfer" width="100%" />
 
 <table>
-<tr>
-<td width="56%" valign="top"><img src="docs/plan.png" alt="Case file, escalation ladder and deadlines for a failed UPI transfer" /></td>
-<td width="44%" valign="top"><img src="docs/draft.png" alt="A legal notice drafted for a defective Flipkart order" /></td>
-</tr>
-<tr>
-<td align="center"><sub><b>Figure 1.</b> A failed UPI transfer becomes a three-step ladder with dates and accrued compensation.</sub></td>
-<td align="center"><sub><b>Figure 2.</b> A legal notice for a defective order. Unknown facts stay as blanks.</sub></td>
-</tr>
+  <tr>
+    <td width="64%" valign="top"><img src="docs/screen-draft.webp" alt="A legal notice drafted for a defective Flipkart order" /></td>
+    <td width="36%" valign="top"><img src="docs/screen-mobile.webp" alt="Cyber-fraud case on mobile with the zero-liability deadline flagged" /></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Legal notice for a defective order, from the offline template</sub></td>
+    <td align="center"><sub>Cyber-fraud case on mobile, deadline flagged</sub></td>
+  </tr>
 </table>
 
 ## How it works
 
-> **The model reads and writes. It never decides where you go.**
-
-<img src="docs/how-it-works.png" alt="Pipeline diagram: your words, intake agent, rules file, planner, drafting agent, with an offline fallback" width="100%" />
-
-The work is split between two language-model agents and a set of deterministic components:
-
-1. **Intake agent** (BharatCode model, temperature 0). Turns the complaint into structured JSON: category, opposite party, amount, date, references, missing facts, confidence.
-2. **Validation.** The JSON is extracted defensively (it tolerates code fences, `<think>` blocks and trailing commas), then checked against a strict zod schema. If a single field is invalid, only that field is replaced with the output of the offline extractor.
-3. **Rules file** ([`lib/knowledge.ts`](lib/knowledge.ts)). A human-reviewed, typed record of forums, escalation order, waiting periods, statutes, helplines and evidence lists for each category. Everything Haq tells a user to *do* comes from here.
-4. **Planner** ([`lib/planner.ts`](lib/planner.ts)). Pure functions that compute escalation dates, working-day windows, accrued compensation, limitation and the Commission tier. No date arithmetic is left to the model.
-5. **Drafting agent** (BharatCode model, streamed). Writes the chosen document from the extracted facts, citing only the provisions the rules file supplies for that category. `<think>` spans are filtered out of the stream.
-6. **Fallback.** If there is no key, the API is unreachable or the output is unusable, a rule-based classifier and bilingual templates take over. The user always gets a complete plan.
+The model reads and writes. **It never decides where you go.** Forums, deadlines and statutes come from a human-reviewed rules file, and the model's output is validated before anything is shown.
 
 ```mermaid
 flowchart LR
-    U([Complaint]) --> I[Intake agent]
-    I -->|JSON| V{Schema check}
-    V -->|valid| K[Rules file]
-    V -->|partial| R[Field repair] --> K
-    I -.->|unavailable| O[Offline classifier] --> K
-    K --> P[Planner]
-    P --> UI[Case file · Ladder · Dates · Law · Evidence]
-    UI --> D[Drafting agent]
-    D -.->|unavailable| T[Templates]
-    D --> OUT([Complaint · Legal notice · Ombudsman text · .ics])
-    T --> OUT
+    A[Complaint] --> B[Intake agent<br/>BharatCode model]
+    B --> C{Schema<br/>validation}
+    C --> D[Rules file<br/>forums · laws]
+    D --> E[Planner<br/>dates · tiers]
+    E --> F[Drafting agent<br/>BharatCode model]
+    F --> G[Complaint · Notice<br/>Reminders]
+    B -. unavailable .-> H[Offline<br/>classifier] --> D
+    F -. unavailable .-> I[Templates] --> G
 ```
+
+1. **Intake agent.** The BharatCode model, at temperature 0, turns the complaint into structured JSON.
+2. **Validation.** The JSON is parsed defensively and checked against a strict zod schema. An invalid field is repaired individually rather than discarding the whole result.
+3. **Rules file.** [`lib/knowledge.ts`](lib/knowledge.ts) is a typed, reviewed record of forums, escalation order, waiting periods, statutes and evidence lists.
+4. **Planner.** [`lib/planner.ts`](lib/planner.ts) holds pure, unit-tested functions for every date and jurisdiction calculation.
+5. **Drafting agent.** The BharatCode model, streamed, writes the document from the extracted facts. It may cite only the provisions supplied for that category, and it leaves blanks instead of guessing.
 
 ## Coverage
 
-| Problem | First stop | Escalation | Key provision |
+| Problem | First stop | Escalation path | Key provision |
 |---|---|---|---|
-| Banking, UPI, cards | Bank or UPI app dispute | RBI Ombudsman (cms.rbi.org.in, 14448) → Consumer Commission | RBI TAT circular 2019: reversal by T+1, then ₹100 per day |
-| Cyber fraud | 1930 and cybercrime.gov.in, same day | Bank in writing → RBI Ombudsman → Consumer Commission | RBI circular 2017: zero liability if reported within 3 working days |
-| E-commerce | Platform Grievance Officer | National Consumer Helpline (1915) → Legal notice → e-Daakhil | E-Commerce Rules 2020: 48-hour acknowledgement, one-month resolution |
-| Telecom, broadband, DTH | Complaint centre (198) | Appellate Authority → NCH → Consumer Commission | TRAI Complaint Redressal Regulations 2012 |
-| Insurance | Insurer's Grievance Officer | Bima Bharosa → Insurance Ombudsman → Consumer Commission | Insurance Ombudsman Rules 2017: claims up to ₹50 lakh |
-| Airlines | Airline nodal officer | AirSewa → Consumer Commission | DGCA CAR Section 3, Series M, Parts II and IV |
-| Real estate | Written demand to the builder | State RERA → Consumer Commission | RERA 2016, Section 18: refund with interest, or interest for delay |
+| Banking, UPI, cards | Bank or UPI app | RBI Ombudsman → Consumer Commission | RBI TAT circular 2019 |
+| Cyber fraud | 1930 · cybercrime.gov.in | Bank → RBI Ombudsman → Consumer Commission | RBI liability circular 2017 |
+| E-commerce | Platform Grievance Officer | NCH 1915 → Legal notice → e-Daakhil | E-Commerce Rules 2020 |
+| Telecom, broadband, DTH | Complaint centre (198) | Appellate Authority → NCH → Consumer Commission | TRAI Regulations 2012 |
+| Insurance | Insurer's Grievance Officer | Bima Bharosa → Insurance Ombudsman → Consumer Commission | Ombudsman Rules 2017 |
+| Airlines | Airline nodal officer | AirSewa → Consumer Commission | DGCA CAR Sec. 3, Series M |
+| Real estate | Builder (written demand) | State RERA → Consumer Commission | RERA 2016, Sec. 18 |
 | Other goods and services | Company grievance cell | NCH → Legal notice → e-Daakhil | Consumer Protection Act 2019 |
 
-The Consumer Commission tier follows the 2021 pecuniary limits: District up to ₹50 lakh, State up to ₹2 crore, National above that.
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router), React 19, TypeScript (strict) |
+| AI | BharatCode model API (OpenAI-compatible), dependency-free client with streaming |
+| Validation | zod |
+| Styling | Tailwind CSS with custom design tokens; Fraunces, Inter and Noto Devanagari |
+| Testing | Vitest, plus a GitHub Actions CI pipeline |
+| Hosting | Render (Singapore), defined in [`render.yaml`](render.yaml) |
 
 ## Getting started
 
-**Requirements:** Node.js 18.18 or later (20 recommended).
+**Prerequisites:** Node.js 18.18 or later.
 
 ```bash
 git clone https://github.com/Kavaykhurana/bharatcode.git
@@ -132,159 +119,148 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open `http://localhost:3000`. Without a key Haq runs in **offline mode**, so you can try the whole flow at once. Add `BHARATCODE_API_KEY` to `.env.local` to turn on the agents.
+Open [http://localhost:3000](http://localhost:3000). Without an API key, Haq runs in offline mode.
 
-### Configuration
+### Environment variables
 
-| Variable | Required | Default | Purpose |
-|---|---|---|---|
-| `BHARATCODE_API_KEY` | For AI mode | — | Server-side key for the BharatCode model API |
-| `BHARATCODE_BASE_URL` | No | `https://bharatcode.ai/api/model/v1` | OpenAI-compatible endpoint |
-| `BHARATCODE_MODEL` | No | `qwen-3.8-27b` | Model identifier |
-| `RATE_LIMIT_PER_MINUTE` | No | `20` | Per-IP limit on each API route |
+| Variable | Required | Default |
+|---|---|---|
+| `BHARATCODE_API_KEY` | For AI mode | — |
+| `BHARATCODE_BASE_URL` | No | `https://bharatcode.ai/api/model/v1` |
+| `BHARATCODE_MODEL` | No | `qwen-3.8-27b` |
+| `RATE_LIMIT_PER_MINUTE` | No | `20` |
 
-**Bring your own key.** A visitor can paste their own BharatCode key under *API key* in the navigation. It stays in that browser's `localStorage`, is sent only to Haq's own routes in the `x-bharatcode-key` header, and is never logged or stored on the server.
+Visitors can also supply their own key from the **API key** menu in the app. It is stored only in their browser and is never logged on the server.
 
-### Deploy
+## Deployment
 
-Haq runs in production on **Render**, defined in [`render.yaml`](render.yaml): a Node web service in the Singapore region, with a health check at `/api/health` and automatic redeploys on every push to `main`.
+Production runs on **Render** and redeploys automatically on every push to `main`.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Kavaykhurana/bharatcode)
 
-To run your own copy:
+The Blueprint in [`render.yaml`](render.yaml) configures the build, start command and health check (`/api/health`). Render only asks for `BHARATCODE_API_KEY`.
 
-1. Click **Deploy to Render** above and sign in.
-2. Paste your `BHARATCODE_API_KEY` when Render asks for it. Every other setting is already in the Blueprint.
-3. Open the `onrender.com` URL Render gives you.
-
-There is no database, no authentication and no other service to configure. `GET /api/health` returns `{"status":"ok","mode":"ai"}` once a key is set, or `"mode":"offline"` without one.
-
-### Scripts
-
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Development server |
-| `npm run build` · `npm start` | Production build and server |
-| `npm run typecheck` | `tsc --noEmit` in strict mode |
-| `npm test` | 23 Vitest unit tests: planner, routing, extractors, JSON repair, stream filter, iCalendar, templates |
+> On Render's free tier, the first request after a period of inactivity can take up to a minute while the instance wakes.
 
 ## API reference
 
-### `GET /api/health`
+<details>
+<summary><code>GET /api/health</code> — liveness probe</summary>
 
-Liveness probe. It returns `status`, and a `mode` of `ai` or `offline` depending on whether the server has a model key. The key itself is never exposed.
+<br />
 
-### `POST /api/analyze`
+```json
+{ "status": "ok", "mode": "ai", "time": "2026-11-02T15:41:53.000Z" }
+```
 
-Classifies the complaint and returns the plan as a stream of newline-delimited JSON events.
+`mode` is `ai` when a server key is configured and `offline` otherwise. The key itself is never exposed.
+
+</details>
+
+<details>
+<summary><code>POST /api/analyze</code> — classify a complaint and build the plan</summary>
+
+<br />
 
 ```json
 { "story": "On 28 Oct I sent ₹4,500 via PhonePe…", "language": "en", "today": "2026-11-02" }
 ```
 
-```jsonl
-{"type":"step","id":"classify","status":"running","detail":"Reading your complaint with the BharatCode model"}
-{"type":"step","id":"classify","status":"done","detail":"Identified: banking upi"}
-{"type":"step","id":"route","status":"done","detail":"3-step escalation ladder · 3 provisions"}
-{"type":"result","plan":{"intake":{},"steps":[],"deadlines":[],"laws":[],"commission":{},"mode":"ai"}}
-```
+The response is streamed NDJSON: `step` events as each stage runs, then one `result` event containing the plan (`intake`, `steps`, `deadlines`, `laws`, `evidence`, `commission`, `mode`).
 
-### `POST /api/draft`
+</details>
 
-Streams the document as plain text. The `X-Haq-Mode` header reports `ai` or `offline`.
+<details>
+<summary><code>POST /api/draft</code> — stream a document</summary>
+
+<br />
 
 ```json
 {
   "intake": { "category": "ecommerce", "opposite_party": "Flipkart", "amount_inr": 18999 },
   "story": "Ordered a phone on Flipkart…",
   "docType": "legal_notice",
-  "language": "hi",
+  "language": "en",
   "complainant": { "name": "Kavay Khurana", "city": "New Delhi" }
 }
 ```
 
-`docType` is one of `company_complaint`, `legal_notice` or `regulator_complaint`. Both routes validate input with zod. They return `400` for invalid input, and `429` with `Retry-After` when rate-limited.
+`docType` is one of `company_complaint`, `legal_notice` or `regulator_complaint`. The response is streamed plain text, and the `X-Haq-Mode` header reports `ai` or `offline`.
 
-## Engineering notes
+</details>
 
-**Grounding over generation.** The drafting prompt only receives the provisions for the classified category, and it is told to leave blanks rather than invent facts. A helpline number or a section reference can only come from the rules file.
+All routes validate input. They return `400` for invalid input and `429` with `Retry-After` when rate-limited.
 
-**Validated, never trusted.** Model output is parsed defensively and checked against a schema. Repair happens field by field, so one bad value doesn't throw away an otherwise good extraction.
+## Project structure
 
-**Deterministic where it matters.** Dates, working days, compensation and jurisdiction are plain functions with unit tests.
-
-**Always available.** The offline path is a complete product, not an error page. It handles Indian amount formats (lakh, crore, ₹, Rs), relative dates ("yesterday", "kal") and common reference-number shapes.
-
-**Streaming throughout.** Analysis streams agent steps, and drafts stream token by token. The client handles a model that fails mid-stream by swapping in the template cleanly.
-
-### Project structure
+<details>
+<summary>Expand</summary>
 
 ```
 app/
-  api/analyze/route.ts   Intake → rules → planner, streamed as NDJSON
-  api/draft/route.ts     Streaming drafting agent with template fallback
-  api/health/route.ts    Liveness probe used by Render
-  fonts.ts               Fraunces, Inter and Noto Devanagari via next/font
-  globals.css            Design tokens and components (literary editorial system)
-  layout.tsx, page.tsx   Shell and metadata
+├── api/
+│   ├── analyze/route.ts   Intake → rules → planner (streamed NDJSON)
+│   ├── draft/route.ts     Drafting agent with template fallback (streamed)
+│   └── health/route.ts    Liveness probe
+├── fonts.ts               Font loading via next/font
+├── globals.css            Design tokens and components
+└── layout.tsx · page.tsx
 components/
-  HaqApp.tsx             The client: intake, agent trace, results, drafting, editorial sections
+└── HaqApp.tsx             Client UI
 lib/
-  knowledge.ts           Rules file: forums, ladders, statutes, evidence — the source of truth
-  bharatcode.ts          OpenAI-compatible client: timeouts, retry, SSE parsing
-  agent.ts               Classification with schema validation and field-level repair
-  prompts.ts             Intake and drafting prompts
-  planner.ts             Escalation dates, working days, limitation, Commission tiers
-  heuristics.ts          Offline classifier and extractors
-  json.ts                Defensive JSON extraction and streaming <think> filter
-  templates.ts           Bilingual document templates
-  ics.ts                 RFC 5545 calendar export
-  ratelimit.ts           Per-IP fixed-window limiter
-public/scenes/           Painted stand-in illustrations (SVG)
-tests/core.test.ts       Unit tests
-render.yaml              Render Blueprint (production deployment)
+├── knowledge.ts           Rules file — forums, ladders, statutes, evidence
+├── bharatcode.ts          BharatCode API client (timeouts, retry, SSE)
+├── agent.ts               Classification, validation and repair
+├── prompts.ts             Agent prompts
+├── planner.ts             Dates, working days, limitation, jurisdiction
+├── heuristics.ts          Offline classifier and extractors
+├── json.ts                Defensive JSON parsing and stream filtering
+├── templates.ts           Bilingual document templates
+├── ics.ts                 Calendar export
+└── ratelimit.ts           Per-IP rate limiting
+tests/core.test.ts         Unit tests
+render.yaml                Render Blueprint
 ```
 
-### Design
+</details>
 
-The interface follows a literary editorial system:
-- a warm parchment canvas, with Fraunces for headings and Inter for everything else
-- 1px green-grey hairlines instead of heavy shadows
-- a single blue, used only as an outline on primary actions
-- painted scenes that carry the atmosphere, so the interface itself can stay quiet
+## Testing
 
-Hindi falls back to Noto Serif and Noto Sans Devanagari, so it keeps the same hierarchy. The layout is tested at 1440px and 390px.
+```bash
+npm run typecheck && npm test
+```
 
-<p align="center"><img src="docs/mobile.jpg" alt="Haq on a 390px mobile screen" width="300" /></p>
+The 23 unit tests cover the planner, routing, extractors for Indian amounts, dates and reference numbers, JSON repair, the streaming filter, calendar export and templates. CI runs the typecheck, tests and a production build on every push.
 
 ## Security and privacy
 
-- **No storage.** There is no database: each complaint is processed in memory for one request and never persisted.
-- **No secrets in the repository.** Server keys live only in environment variables.
-- **Request limits.** Every route has input length caps, schema validation and per-IP rate limiting.
-- **Strict response headers:** `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy` and `Permissions-Policy`.
-- **Minimal model input.** The model receives only the user's own complaint, never credentials.
+- No database. Complaints are processed per request and never stored.
+- No secrets in the repository. Keys live only in environment variables.
+- Input limits, schema validation and per-IP rate limiting on every route.
+- Strict security headers: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`.
 
 ## Roadmap
 
-- Voice input in Indian languages, for people who would rather speak than type
-- Tamil, Telugu, Bengali and Marathi
-- Upload a bill or screenshot to fill reference numbers automatically
-- State-wise RERA portals and electricity ombudsmen
-- A case tracker with reminders, beyond a calendar file
+- [ ] Voice input in Indian languages
+- [ ] Tamil, Telugu, Bengali and Marathi
+- [ ] Bill or screenshot upload with automatic reference extraction
+- [ ] State-wise RERA portals and electricity ombudsmen
+- [ ] Case tracking with reminders
 
 ## Team
 
-**Team AlphaFire**, BharatCode Build League 2026
+Built by **Team AlphaFire** for the **BharatCode Build League 2026**.
 
-- Kavay Khurana · [@Kavaykhurana](https://github.com/Kavaykhurana)
+| Member | GitHub |
+|---|---|
+| Kavay Khurana | [@Kavaykhurana](https://github.com/Kavaykhurana) |
 
-If you think every consumer should know where to complain, a star on the repository helps others find it.
+If you think every consumer should know where to complain, **star the repository**. It helps others find it.
 
 ## Disclaimer
 
-Haq provides legal information, not legal advice. Forums, limits and timelines are curated from official sources, last reviewed in November 2026, and they can change. Verify on the linked government portals before filing. For complex or high-value disputes, consult an advocate.
+Haq provides legal information, not legal advice. Rules and limits are curated from official sources, last reviewed in November 2026, and may change. Verify on the linked government portals before filing.
 
-## Licence
+## License
 
-Released under the [MIT licence](LICENSE).
+[MIT](LICENSE) © 2026 Kavay Khurana and Team AlphaFire
