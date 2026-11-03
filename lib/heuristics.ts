@@ -7,7 +7,7 @@ import type { Category, Intake } from "./types";
 const RULES: { category: Category; patterns: RegExp[] }[] = [
   {
     category: "cyber_fraud",
-    patterns: [/fraud|scam|unauthori[sz]ed|\bhack|\botp\b|phish|cheat|stolen|without my (consent|permission)|i didn'?t make|ठग|धोखा|फ्रॉड/i]
+    patterns: [/fraud|scam|unauthori[sz]ed|\bhack|\botp\b|phish|without my (consent|permission)|i didn'?t make|ठग|धोखा|फ्रॉड/i]
   },
   {
     category: "airline",
@@ -15,7 +15,7 @@ const RULES: { category: Category; patterns: RegExp[] }[] = [
   },
   {
     category: "insurance",
-    patterns: [/insur|\bpolicy (?:number|no)|insurance policy|\bclaim|cashless|tpa|premium|lic\b|bima|बीमा|क्लेम/i]
+    patterns: [/insur|\bpolicy (?:number|no)|insurance policy|\bclaim|cashless|\btpa\b|premium|\blic\b|bima|बीमा|क्लेम/i]
   },
   {
     category: "real_estate",
@@ -27,7 +27,7 @@ const RULES: { category: Category; patterns: RegExp[] }[] = [
   },
   {
     category: "banking_upi",
-    patterns: [/upi|bank|neft|imps|rtgs|atm|debit|credit card|paytm|phonepe|gpay|google pay|utr|refund.*account|बैंक|पैसे कट/i]
+    patterns: [/upi|bank|neft|imps|rtgs|\batm\b|debit|credit card|paytm|phonepe|gpay|google pay|\butr\b|refund.*account|बैंक|पैसे कट/i]
   },
   {
     category: "ecommerce",
@@ -48,14 +48,23 @@ export function classifyOffline(story: string, today: string): Intake {
     category: r.category,
     score: r.patterns.reduce((n, p) => n + (story.match(new RegExp(p, "gi"))?.length ?? 0), 0)
   }));
-  // Fraud language overrides a generic bank match: it changes the urgency entirely.
+  // Fraud language overrides a generic bank match (it changes the urgency entirely), but a stray
+  // fraud word must not beat a clearly different category such as an e-commerce or telecom dispute.
   const fraud = scores.find((s) => s.category === "cyber_fraud")!;
-  const best = fraud.score > 0 ? fraud : scores.reduce((a, b) => (b.score > a.score ? b : a));
+  const banking = scores.find((s) => s.category === "banking_upi")!;
+  const topOther = Math.max(...scores.filter((s) => s !== fraud).map((s) => s.score));
+  const fraudWins = fraud.score > 0 && (banking.score > 0 || fraud.score > topOther);
+  const best = fraudWins ? fraud : scores.reduce((a, b) => (b.score > a.score ? b : a));
   const category: Category = best.score > 0 ? best.category : "general_consumer";
 
-  const company = COMPANIES.find((c) => new RegExp(`\\b${c.replace(/ /g, "\\s+")}\\b`, "i").test(story)) ?? null;
+  // The company named earliest in the story is the opposite party, not the first one in our list.
+  const company =
+    COMPANIES.map((c) => ({ c, at: story.search(new RegExp(`\\b${c.replace(/ /g, "\\s+")}\\b`, "i")) }))
+      .filter((m) => m.at >= 0)
+      .sort((a, b) => a.at - b.at)[0]?.c ?? null;
   const amount = extractAmount(story);
-  const incidentDate = extractDate(story, today);
+  const found = extractDate(story, today);
+  const incidentDate = found && found <= today ? found : null; // an incident cannot be in the future
   const refs = extractReferences(story);
 
   const missing: string[] = [];
@@ -70,7 +79,8 @@ export function classifyOffline(story: string, today: string): Intake {
     opposite_party: company,
     amount_inr: amount,
     incident_date: incidentDate,
-    already_complained: /complain|ticket|customer care|support|raised|शिकायत/i.test(story),
+    already_complained:
+      /\b(?:already|previously|earlier)\b.{0,40}\b(?:complain|rais|report)|\b(?:complained|raised|reported)\b|\bticket\s*(?:no|number|id|#)|शिकायत (?:की|दर्ज)/i.test(story),
     reference_ids: refs,
     missing_info: missing,
     confidence: best.score > 0 ? Math.min(0.75, 0.4 + best.score * 0.1) : 0.3
@@ -81,19 +91,26 @@ export function classifyOffline(story: string, today: string): Intake {
 export function extractReferences(text: string): string[] {
   const found = new Set<string>();
   for (const m of text.matchAll(/\b\d{3}-\d{7}-\d{7}\b/g)) found.add(m[0]);
-  for (const m of text.matchAll(/\b\d{12}\b/g)) found.add(m[0]);
+  // A bare 12-digit number may be an Aadhaar number; only accept it next to a transaction keyword.
+  for (const m of text.matchAll(/\b(?:utr|rrn|ref(?:erence)?|txn|transaction)\b\D{0,25}(\d{12})\b/gi)) found.add(m[1]);
   for (const m of text.matchAll(/\b[A-Z]{2,}[-_]?\d{5,}\b/g)) found.add(m[0]);
-  for (const m of text.matchAll(/\bPNR\b[:\s#-]*([A-Z0-9]{6})\b/gi)) found.add(m[1].toUpperCase());
+  for (const m of text.matchAll(/\bPNR\b[:\s#-]*([A-Z0-9]{6})\b/gi)) if (/\d/.test(m[1])) found.add(m[1].toUpperCase());
   return Array.from(found).slice(0, 5);
 }
 
 export function extractAmount(text: string): number | null {
-  const m = text.match(/(?:₹|rs\.?|inr|rupees?)\s*([\d,]+(?:\.\d+)?)(?:\s*(lakhs?|lacs?|crores?|cr|k)(?![a-z]))?|([\d,]+(?:\.\d+)?)(?:\s*(lakhs?|lacs?|crores?|cr|k)(?![a-z]))?\s*(?:rupees|rs\b|₹|रुपये)/i);
+  const unitRe = "(lakhs?|lacs?|crores?|cr|k|लाख|करोड़|हज़ार|हजार)(?![a-z])";
+  const m = text.match(
+    new RegExp(
+      `(?<![a-z])(?:₹|rs\\.?|inr|rupees?)\\s*(\\d[\\d,]*(?:\\.\\d+)?)(?:\\s*${unitRe})?|(\\d[\\d,]*(?:\\.\\d+)?)(?:\\s*${unitRe})?\\s*(?:rupees|(?<![a-z])rs\\b|₹|रुपये)`,
+      "i"
+    )
+  );
   if (!m) return null;
   const num = parseFloat((m[1] ?? m[3]).replace(/,/g, ""));
   if (!Number.isFinite(num)) return null;
   const unit = (m[2] ?? m[4] ?? "").toLowerCase();
-  const mult = unit === "k" ? 1e3 : /^la/.test(unit) ? 1e5 : /^cr/.test(unit) ? 1e7 : 1;
+  const mult = unit === "k" || /^ह/.test(unit) ? 1e3 : /^la|^ला/.test(unit) ? 1e5 : /^cr|^क/.test(unit) ? 1e7 : 1;
   return Math.round(num * mult);
 }
 

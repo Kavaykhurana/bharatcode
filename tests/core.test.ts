@@ -182,4 +182,56 @@ describe("regressions", () => {
     expect(ics.split("\r\n").every((l) => enc.encode(l).length <= 75)).toBe(true);
     expect(ics.replace(/\r\n /g, "")).toContain("बैंक ऑफ़ इंडिया");
   });
+
+  it("reads amounts after punctuation, ignores letters before rs/inr, and understands Hindi units", () => {
+    expect(extractAmount("Hello, Rs 500 was deducted")).toBe(500);
+    expect(extractAmount("many orders 2 weeks ago and paid Rs 1500")).toBe(1500);
+    expect(extractAmount("₹45 लाख का फ्लैट")).toBe(4_500_000);
+  });
+
+  it("does not let one stray fraud word override the real category", () => {
+    const cat = (s: string) => classifyOffline(s, TODAY).category;
+    expect(cat("The builder cheated me, flat possession delayed by two years")).toBe("real_estate");
+    expect(cat("My phone was stolen, please block my Airtel SIM")).toBe("telecom");
+    expect(cat("Delivery agent asked for OTP and marked my Amazon order delivered")).toBe("ecommerce");
+    expect(cat("Rs 5000 was debited via UPI, unauthorised, I didn't make this payment")).toBe("cyber_fraud");
+  });
+
+  it("matches atm/utr/lic/tpa as whole words only", () => {
+    expect(classifyOffline("The hospital treatment was refused and the insurer rejected my claim", TODAY).category).toBe("insurance");
+    expect(classifyOffline("The gym staff were outrageous about my membership refund", TODAY).category).not.toBe("banking_upi");
+  });
+
+  it("picks the company named first in the story and does not invent prior contact", () => {
+    const i = classifyOffline("HDFC Bank debited my account after a fraudster pretending to be Amazon called", TODAY);
+    expect(i.opposite_party).toBe("HDFC Bank");
+    expect(classifyOffline("I want to file a complaint against Zomato for a missing item", TODAY).already_complained).toBe(false);
+    expect(classifyOffline("I already complained to Zomato support, ticket no 4411", TODAY).already_complained).toBe(true);
+  });
+
+  it("keeps non-PNR words and bare 12-digit numbers out of the reference list", () => {
+    expect(extractReferences("PNR status shows cancelled")).toEqual([]);
+    expect(extractReferences("my aadhaar is 123456789012")).toEqual([]);
+  });
+
+  it("rejects month-precision dates and drops future offline dates", () => {
+    expect(IntakeSchema.safeParse({ ...intake({}), incident_date: "2026-10-00" }).success).toBe(false);
+    expect(classifyOffline("Zomato charged me twice on 10/12/2026", TODAY).incident_date).toBeNull();
+  });
+
+  it("flags a lapsed limitation period and caveats zero liability", () => {
+    const lapsed = buildPlan(intake({ category: "ecommerce", incident_date: "2023-01-01" }), TODAY, "ai");
+    const d = lapsed.deadlines.find((x) => x.label.includes("limitation"))!;
+    expect(d.urgent).toBe(false);
+    expect(d.detail).toMatch(/condone/);
+    const fraud = buildPlan(intake({ category: "cyber_fraud", incident_date: TODAY }), TODAY, "ai");
+    expect(fraud.deadlines[0].detail).toMatch(/share your OTP/);
+  });
+
+  it("only accrues failed-transaction compensation when the story describes a failure", () => {
+    const fee = buildPlan(intake({ category: "banking_upi", incident_date: "2026-10-01", summary: "Bank charged a wrong annual fee" }), TODAY, "ai");
+    expect(fee.deadlines.some((x) => x.label.includes("compensation"))).toBe(false);
+    const failed = buildPlan(intake({ category: "banking_upi", incident_date: "2026-10-01", summary: "UPI payment failed but money was debited" }), TODAY, "ai");
+    expect(failed.deadlines.some((x) => x.label.includes("compensation"))).toBe(true);
+  });
 });

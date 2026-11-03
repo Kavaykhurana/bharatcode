@@ -385,22 +385,37 @@ export default function HaqApp() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
+      let gotResult = false;
+      const handle = (line: string) => {
+        if (!line.trim()) return;
+        let parsed: AnalyzeEvent | null = null;
+        try {
+          parsed = JSON.parse(line) as AnalyzeEvent;
+        } catch {
+          return; // a malformed line must not discard a later result
+        }
+        const event = parsed;
+        if (event.type === "step") setSteps((s) => ({ ...s, [event.id]: { status: event.status, detail: event.detail } }));
+        else if (event.type === "result") {
+          gotResult = true;
+          setPlan(event.plan);
+          const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          setTimeout(() => resultRef.current?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" }), 60);
+        } else if (event.type === "error") throw new Error(event.message);
+      };
       for (;;) {
         const { value, done } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+        buffer += decoder.decode(value, { stream: !done });
         let nl: number;
         while ((nl = buffer.indexOf("\n")) !== -1) {
-          const line = buffer.slice(0, nl).trim();
+          handle(buffer.slice(0, nl));
           buffer = buffer.slice(nl + 1);
-          if (!line) continue;
-          const event = JSON.parse(line) as AnalyzeEvent;
-          if (event.type === "step") setSteps((s) => ({ ...s, [event.id]: { status: event.status, detail: event.detail } }));
-          else if (event.type === "result") {
-            setPlan(event.plan);
-            setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
-          } else if (event.type === "error") throw new Error(event.message);
         }
+        if (done) break;
+      }
+      handle(buffer);
+      if (!gotResult && !controller.signal.aborted) {
+        throw new Error(lang === "hi" ? "कनेक्शन बीच में टूट गया। कृपया दोबारा कोशिश करें।" : "The connection ended before the plan was ready. Please try again.");
       }
     } catch (err) {
       if (!controller.signal.aborted) setError(err instanceof Error ? err.message : "Something went wrong");

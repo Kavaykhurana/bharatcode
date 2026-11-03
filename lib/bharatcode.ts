@@ -43,31 +43,51 @@ export function resolveLlmConfig(userKey?: string | null): LlmConfig | null {
   };
 }
 
-async function post(cfg: LlmConfig, body: Record<string, unknown>, timeoutMs: number, signal?: AbortSignal): Promise<Response> {
+interface Pending {
+  res: Response;
+  /** Releases the timeout and abort listener. Call once the body has been fully read. */
+  done: () => void;
+}
+
+/**
+ * The timeout and the caller's abort signal stay armed until `done()` so they also cover the
+ * response body (a stalled stream), not just the time to first byte.
+ */
+async function post(cfg: LlmConfig, body: Record<string, unknown>, timeoutMs: number, signal?: AbortSignal): Promise<Pending> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(new LlmError("Model request timed out")), timeoutMs);
   const onAbort = () => controller.abort(signal?.reason);
-  signal?.addEventListener("abort", onAbort, { once: true });
+  const done = () => {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", onAbort);
+  };
+  if (signal?.aborted) onAbort();
+  else signal?.addEventListener("abort", onAbort, { once: true });
   try {
-    return await fetch(`${cfg.baseUrl}/chat/completions`, {
+    const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${cfg.apiKey}` },
       body: JSON.stringify({ model: cfg.model, ...body }),
       signal: controller.signal,
       cache: "no-store"
     });
-  } finally {
-    clearTimeout(timer);
-    signal?.removeEventListener("abort", onAbort);
+    return { res, done };
+  } catch (err) {
+    done();
+    throw err;
   }
 }
 
-async function postWithRetry(cfg: LlmConfig, body: Record<string, unknown>, timeoutMs: number, signal?: AbortSignal): Promise<Response> {
+async function postWithRetry(cfg: LlmConfig, body: Record<string, unknown>, timeoutMs: number, signal?: AbortSignal): Promise<Pending> {
   let lastError: unknown;
   for (let attempt = 0; attempt < 2; attempt++) {
+    if (signal?.aborted) throw signal.reason ?? new LlmError("Request aborted");
     try {
-      const res = await post(cfg, body, timeoutMs, signal);
-      if (res.ok) return res;
+      const pending = await post(cfg, body, timeoutMs, signal);
+      const { res } = pending;
+      if (res.ok) return pending;
+      pending.done();
+      await res.body?.cancel().catch(() => undefined);
       if (res.status === 429 || res.status >= 500) {
         lastError = new LlmError(`Model API returned ${res.status}`, res.status);
         await new Promise((r) => setTimeout(r, 800 * (attempt + 1)));
@@ -76,7 +96,8 @@ async function postWithRetry(cfg: LlmConfig, body: Record<string, unknown>, time
       if (res.status === 401 || res.status === 403) throw new LlmError("The BharatCode API key was rejected.", res.status);
       throw new LlmError(`Model API returned ${res.status}`, res.status);
     } catch (err) {
-      if (err instanceof LlmError && err.status && err.status < 500 && err.status !== 429) throw err;
+      // Client errors and timeouts (an LlmError with no status) are final: retrying a timeout would double the wait.
+      if (err instanceof LlmError && (!err.status || (err.status < 500 && err.status !== 429))) throw err;
       if (signal?.aborted) throw err;
       lastError = err;
     }
@@ -89,13 +110,21 @@ export async function chat(
   messages: ChatMessage[],
   opts: { temperature?: number; maxTokens?: number; timeoutMs?: number; signal?: AbortSignal } = {}
 ): Promise<string> {
-  const res = await postWithRetry(
+  const { res, done } = await postWithRetry(
     cfg,
     { messages, temperature: opts.temperature ?? 0.2, max_tokens: opts.maxTokens ?? 1200, stream: false },
     opts.timeoutMs ?? 45_000,
     opts.signal
   );
-  const data = (await res.json().catch(() => null)) as { choices?: { message?: { content?: string } }[] } | null;
+  let data: { choices?: { message?: { content?: string } }[] } | null;
+  try {
+    data = await res.json();
+  } catch (err) {
+    if (err instanceof LlmError) throw err;
+    data = null;
+  } finally {
+    done();
+  }
   const content = data?.choices?.[0]?.message?.content;
   if (typeof content !== "string" || content.trim() === "") throw new LlmError("Model returned an empty response");
   return content;
@@ -107,12 +136,20 @@ export async function* chatStream(
   messages: ChatMessage[],
   opts: { temperature?: number; maxTokens?: number; timeoutMs?: number; signal?: AbortSignal } = {}
 ): AsyncGenerator<string> {
-  const res = await postWithRetry(
+  const { res, done } = await postWithRetry(
     cfg,
     { messages, temperature: opts.temperature ?? 0.4, max_tokens: opts.maxTokens ?? 1800, stream: true },
     opts.timeoutMs ?? 90_000,
     opts.signal
   );
+  try {
+    yield* readStream(res, opts.signal);
+  } finally {
+    done();
+  }
+}
+
+async function* readStream(res: Response, signal?: AbortSignal): AsyncGenerator<string> {
   if (!res.body) throw new LlmError("Model returned no stream body");
 
   const contentType = res.headers.get("content-type") ?? "";
@@ -128,7 +165,7 @@ export async function* chatStream(
   const decoder = new TextDecoder();
   let buffer = "";
   for (;;) {
-    if (opts.signal?.aborted) {
+    if (signal?.aborted) {
       await reader.cancel().catch(() => undefined);
       return;
     }
