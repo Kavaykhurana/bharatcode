@@ -15,7 +15,7 @@ export async function classify(
   cfg: LlmConfig | null,
   signal?: AbortSignal
 ): Promise<{ intake: Intake; mode: "ai" | "offline"; note?: string }> {
-  const offline = classifyOffline(story, today);
+  const offline = sanitise(classifyOffline(story, today), today);
   if (!cfg) return { intake: offline, mode: "offline", note: "No API key configured — using the offline classifier." };
 
   try {

@@ -28,6 +28,14 @@ export function addWorkingDays(iso: string, days: number): string {
   return toISODate(date);
 }
 
+/** Adds whole calendar years; 29 Feb rolls back to 28 Feb so a limitation date is never later than the law allows. */
+export function addYears(iso: string, years: number): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  const target = new Date(Date.UTC(y + years, m - 1, d));
+  if (target.getUTCMonth() !== m - 1) target.setUTCDate(0);
+  return toISODate(target);
+}
+
 export function daysBetween(fromIso: string, toIso: string): number {
   return Math.round((parseISODate(toIso).getTime() - parseISODate(fromIso).getTime()) / DAY_MS);
 }
@@ -63,9 +71,9 @@ export function computeDeadlines(intake: Intake, today: string): Deadline[] {
         urgent: today <= zeroLiability,
         detail:
           today <= zeroLiability
-            ? "Report to your bank before this date to keep zero liability under the RBI 2017 circular."
+            ? "Report to your bank before this date. Under the RBI 2017 circular the 3 working days run from when the bank's alert reached you, so treat this date as an estimate. Zero liability applies only if you did not share your OTP, PIN or password."
             : today <= limited
-              ? `Zero-liability window has passed; reporting before ${limited} still caps your liability.`
+              ? `Zero-liability window has passed (estimated); reporting before ${limited} still caps your liability. If you shared an OTP or PIN, the bank may treat the loss as yours until you report.`
               : "Both windows have passed — the bank decides liability under its board-approved policy. Report anyway, today."
       });
     } else {
@@ -73,31 +81,42 @@ export function computeDeadlines(intake: Intake, today: string): Deadline[] {
         label: "Report within 3 working days",
         date: null,
         urgent: true,
-        detail: "Zero liability applies only if you report a third-party fraud within 3 working days of the transaction."
+        detail: "Zero liability applies only to a third-party fraud that you did not enable (no shared OTP, PIN or password) and report within 3 working days of the bank's alert."
       });
     }
   }
 
-  if (intake.category === "banking_upi" && incident) {
-    const reversalDue = addDays(incident, 1);
+  // RBI TAT: T+1 for failed UPI/IMPS, T+5 for failed ATM withdrawals. Only claim it when the story describes a failure.
+  const failedTxn = /fail|not (?:received|credited|reversed)|stuck|pending|revers|refund/i.test(intake.summary);
+  if (intake.category === "banking_upi" && incident && failedTxn) {
+    const reversalDue = addDays(incident, /\batm\b/i.test(intake.summary) ? 5 : 1);
     const overdue = Math.max(0, daysBetween(reversalDue, today));
     if (overdue > 0) {
       deadlines.push({
         label: "Failed-transaction compensation accrued",
         date: reversalDue,
         urgent: false,
-        detail: `Reversal was due by ${reversalDue}. At ₹100/day you can claim about ₹${(overdue * 100).toLocaleString("en-IN")} so far (if the transaction failed and was not reversed).`
+        detail: `Reversal was due by ${reversalDue}. At ₹100/day you can claim up to about ₹${(overdue * 100).toLocaleString("en-IN")} until it is reversed (only if the transaction failed and was not reversed).`
       });
     }
   }
 
   if (incident) {
-    const limitation = addDays(incident, 365 * 2);
+    const limitation = addYears(incident, 2);
+    const lapsed = limitation < today;
+    const laterStart =
+      intake.category === "insurance"
+        ? " For an insurance claim the period usually runs from the insurer's rejection, which may be later than the incident."
+        : intake.category === "real_estate"
+          ? " Non-delivery of possession is often treated as a continuing wrong, so the period may not have started to run."
+          : "";
     deadlines.push({
       label: "Consumer Commission limitation",
       date: limitation,
-      urgent: daysBetween(today, limitation) <= 60,
-      detail: "File before this date (2 years from the cause of action). Delay can be condoned only with sufficient cause."
+      urgent: !lapsed && daysBetween(today, limitation) <= 60,
+      detail: lapsed
+        ? `Two years from the incident date have passed. A complaint can still be filed with an application to condone the delay for sufficient cause (Consumer Protection Act 2019, s.69).${laterStart || " Check whether the cause of action arose later, for example on a final rejection."}`
+        : `File before this date (2 years from the cause of action). Delay can be condoned only with sufficient cause.${laterStart}`
     });
   } else {
     deadlines.push({

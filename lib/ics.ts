@@ -5,14 +5,23 @@ function escapeIcs(text: string): string {
 }
 
 function fold(line: string): string {
-  // RFC 5545: lines longer than 75 octets are folded with CRLF + space.
+  // RFC 5545: lines longer than 75 octets are folded with CRLF + space. Count UTF-8 bytes
+  // and never split a character, so ₹ and Devanagari survive intact.
+  const encoder = new TextEncoder();
   const out: string[] = [];
-  let rest = line;
-  while (rest.length > 74) {
-    out.push(rest.slice(0, 74));
-    rest = " " + rest.slice(74);
+  let current = "";
+  let bytes = 0;
+  for (const ch of line) {
+    const size = encoder.encode(ch).length;
+    if (bytes + size > 75) {
+      out.push(current);
+      current = " ";
+      bytes = 1;
+    }
+    current += ch;
+    bytes += size;
   }
-  out.push(rest);
+  out.push(current);
   return out.join("\r\n");
 }
 
@@ -52,7 +61,7 @@ export function planToIcs(plan: CasePlan, stamp = new Date()): string {
       "BEGIN:VALARM",
       "TRIGGER;RELATED=START:PT9H",
       "ACTION:DISPLAY",
-      `DESCRIPTION:${escapeIcs(e.title)}`,
+      fold(`DESCRIPTION:${escapeIcs(e.title)}`),
       "END:VALARM",
       "END:VEVENT"
     );

@@ -82,7 +82,65 @@ const T = {
     startOn: "Start",
     escalateOn: "Escalate if unresolved by",
     disclaimer:
-      "Haq gives legal information, not legal advice. Forums, limits and timelines are curated from official sources and can change; verify on the linked portals before filing."
+      "Haq gives legal information, not legal advice. Forums, limits and timelines are curated from official sources and can change; verify on the linked portals before filing.",
+    navHow: "How it works",
+    navCoverage: "Coverage",
+    navLang: "हिन्दी",
+    navKey: "API key",
+    stats: [
+      { num: "₹100", label: "a day owed by your bank while a failed UPI transfer stays unreversed" },
+      { num: "3 days", label: "to report a fraud to your bank and keep zero liability" },
+      { num: "₹0", label: "to file at the Consumer Commission for claims up to ₹5 lakh" }
+    ],
+    benefits: ["The right forum, in the right order", "A dated plan with every deadline", "A draft in English or Hindi"],
+    howEyebrow: "How it works",
+    howTitle: "The model reads and writes. It never decides where you go.",
+    howP1:
+      "An intake agent on the BharatCode model turns your words into facts. A rules file, reviewed by people, picks the forum, the order of escalation and the law. A planner computes the dates. A second agent drafts the letter from those facts alone.",
+    howP2: "If the model is unavailable, a rule-based classifier and template drafts take over, so the plan is always there.",
+    howFig: "Figure 1.",
+    howFigText: "Two agents, one rules file. Helplines, sections and deadlines come only from the rules file, so they cannot be invented.",
+    covEyebrow: "Coverage",
+    covTitle: "Eight kinds of trouble, each with its own ladder.",
+    covCols: ["Problem", "First stop", "Then", "Key rule"],
+    scamTitle: "Lost money to a scam? Call 1930 before anything else.",
+    scamBody:
+      "Funds can often be frozen in the fraudster's account if the report reaches the cyber-crime helpline within hours. Report it, then come back here for the bank complaint and the zero-liability deadline.",
+    scamCta: "Open cybercrime.gov.in",
+    footStatement: "Every consumer in India has rights. Few know where to use them.",
+    footBuilt: "Built by Team AlphaFire for the BharatCode Build League · Powered by the BharatCode model API · MIT licence",
+    footProject: "Project",
+    footHelp: "Get help",
+    footSource: "Source on GitHub",
+    footLeague: "BharatCode Build League",
+    footNch: "National Consumer Helpline",
+    footCyber: "Cyber-crime portal (1930)",
+    footEdaakhil: "e-Daakhil",
+    urgent: "Urgent",
+    against: "Against",
+    amount: "Amount",
+    incident: "Incident",
+    refs: "References",
+    commissionIf: "If it reaches a commission:",
+    fieldHint: "Ctrl + Enter to submit",
+    done: "Done",
+    waiting: "Waiting",
+    diagram: {
+      words: "Your words",
+      wordsSub: "English · हिन्दी · Hinglish",
+      intake: "Intake agent",
+      intakeSub: "BharatCode model → JSON",
+      rules: "Rules file",
+      rulesSub: "forums · laws",
+      planner: "Planner",
+      plannerSub: "dates · tiers",
+      fallback: "Fallback",
+      fallbackSub: "if the model fails",
+      drafting: "Drafting agent",
+      draftingSub: "streamed, grounded",
+      outputs: "Complaint · Legal notice · Ombudsman text · Calendar reminders",
+      alt: "Pipeline: your words go to the intake agent, then the rules file and planner, then the drafting agent, producing documents and reminders."
+    }
   },
   hi: {
     heroTitle: "कहाँ शिकायत करें, और क्या लिखें।",
@@ -118,7 +176,65 @@ const T = {
     startOn: "शुरू",
     escalateOn: "हल न हो तो आगे बढ़ें",
     disclaimer:
-      "Haq क़ानूनी जानकारी देता है, क़ानूनी सलाह नहीं। नियम आधिकारिक स्रोतों से लिए गए हैं और बदल सकते हैं; शिकायत से पहले लिंक किए गए पोर्टल पर जाँच लें।"
+      "Haq क़ानूनी जानकारी देता है, क़ानूनी सलाह नहीं। नियम आधिकारिक स्रोतों से लिए गए हैं और बदल सकते हैं; शिकायत से पहले लिंक किए गए पोर्टल पर जाँच लें।",
+    navHow: "कैसे",
+    navCoverage: "दायरा",
+    navLang: "English",
+    navKey: "API key",
+    stats: [
+      { num: "₹100", label: "प्रति दिन, जब तक बैंक असफल UPI लेन-देन को वापस नहीं करता" },
+      { num: "3 दिन", label: "में बैंक को फ्रॉड बताएँ और ज़ीरो लायबिलिटी पाएँ" },
+      { num: "₹0", label: "5 लाख तक के दावे पर उपभोक्ता आयोग में फ़ाइलिंग शुल्क" }
+    ],
+    benefits: ["सही मंच, सही क्रम में", "तारीख़ों के साथ योजना", "अंग्रेज़ी या हिंदी में ड्राफ़्ट"],
+    howEyebrow: "यह कैसे काम करता है",
+    howTitle: "मॉडल पढ़ता और लिखता है। कहाँ जाना है, यह वह तय नहीं करता।",
+    howP1:
+      "BharatCode मॉडल पर चलने वाला इनटेक एजेंट आपके शब्दों को तथ्यों में बदलता है। लोगों द्वारा जाँची गई नियम-फ़ाइल सही मंच, क्रम और क़ानून चुनती है। प्लानर तारीख़ें निकालता है। दूसरा एजेंट सिर्फ़ इन्हीं तथ्यों से पत्र लिखता है।",
+    howP2: "मॉडल न मिले तो नियम-आधारित क्लासिफ़ायर और टेम्पलेट ड्राफ़्ट काम सँभाल लेते हैं, इसलिए योजना हमेशा मिलती है।",
+    howFig: "चित्र 1.",
+    howFigText: "दो एजेंट, एक नियम-फ़ाइल। हेल्पलाइन, धाराएँ और समय-सीमाएँ केवल नियम-फ़ाइल से आती हैं, इसलिए गढ़ी नहीं जा सकतीं।",
+    covEyebrow: "दायरा",
+    covTitle: "आठ तरह की परेशानियाँ, हर एक की अपनी सीढ़ी।",
+    covCols: ["समस्या", "पहला कदम", "फिर", "मुख्य नियम"],
+    scamTitle: "ठगी में पैसे गए? सबसे पहले 1930 पर कॉल करें।",
+    scamBody:
+      "अगर साइबर-क्राइम हेल्पलाइन तक रिपोर्ट कुछ घंटों में पहुँच जाए, तो ठग के खाते में पैसा अक्सर रोका जा सकता है। पहले रिपोर्ट करें, फिर बैंक शिकायत और ज़ीरो-लायबिलिटी की समय-सीमा के लिए यहाँ लौटें।",
+    scamCta: "cybercrime.gov.in खोलें",
+    footStatement: "भारत के हर उपभोक्ता के पास हक़ है। कम लोग जानते हैं कि उसे कहाँ इस्तेमाल करें।",
+    footBuilt: "टीम AlphaFire द्वारा BharatCode Build League के लिए बनाया गया · BharatCode मॉडल API पर आधारित · MIT लाइसेंस",
+    footProject: "प्रोजेक्ट",
+    footHelp: "मदद पाएँ",
+    footSource: "GitHub पर सोर्स",
+    footLeague: "BharatCode Build League",
+    footNch: "राष्ट्रीय उपभोक्ता हेल्पलाइन",
+    footCyber: "साइबर-क्राइम पोर्टल (1930)",
+    footEdaakhil: "e-Daakhil",
+    urgent: "तुरंत",
+    against: "किसके ख़िलाफ़",
+    amount: "राशि",
+    incident: "घटना",
+    refs: "संदर्भ",
+    commissionIf: "अगर मामला आयोग तक जाए:",
+    fieldHint: "Ctrl + Enter से भेजें",
+    done: "पूरा",
+    waiting: "प्रतीक्षा",
+    diagram: {
+      words: "आपके शब्द",
+      wordsSub: "English · हिन्दी · Hinglish",
+      intake: "इनटेक एजेंट",
+      intakeSub: "BharatCode मॉडल → JSON",
+      rules: "नियम-फ़ाइल",
+      rulesSub: "मंच · क़ानून",
+      planner: "प्लानर",
+      plannerSub: "तारीख़ें · स्तर",
+      fallback: "विकल्प",
+      fallbackSub: "मॉडल न चले तो",
+      drafting: "ड्राफ़्टिंग एजेंट",
+      draftingSub: "स्ट्रीम, तथ्यों पर आधारित",
+      outputs: "शिकायत · विधिक नोटिस · लोकपाल पत्र · कैलेंडर रिमाइंडर",
+      alt: "पाइपलाइन: आपके शब्द इनटेक एजेंट को जाते हैं, फिर नियम-फ़ाइल और प्लानर, फिर ड्राफ़्टिंग एजेंट, जिससे दस्तावेज़ और रिमाइंडर बनते हैं।"
+    }
   }
 } as const;
 
@@ -193,19 +309,9 @@ function ArrowIcon() {
   );
 }
 
-function ArrowCircle() {
-  return (
-    <span className="arrow-circle" aria-hidden="true">
-      <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2.5 5h5M5.5 3 7.5 5l-2 2" />
-      </svg>
-    </span>
-  );
-}
-
 function Mark() {
   return (
-    <svg className="nav-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M10 3v14M4 6h12" />
       <path d="M4 6 2 11a2.2 2.2 0 0 0 4 0L4 6ZM16 6l-2 5a2.2 2.2 0 0 0 4 0l-2-5Z" />
       <path d="M7 17h6" />
@@ -224,6 +330,7 @@ export default function HaqApp() {
   const [busy, setBusy] = useState(false);
   const [apiKey, setApiKey] = useState("");
   const [showSettings, setShowSettings] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
   const resultRef = useRef<HTMLElement | null>(null);
   const t = T[lang];
@@ -231,6 +338,15 @@ export default function HaqApp() {
   useEffect(() => {
     setApiKey(readStorage(KEY_STORAGE));
   }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -269,22 +385,37 @@ export default function HaqApp() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
+      let gotResult = false;
+      const handle = (line: string) => {
+        if (!line.trim()) return;
+        let parsed: AnalyzeEvent | null = null;
+        try {
+          parsed = JSON.parse(line) as AnalyzeEvent;
+        } catch {
+          return; // a malformed line must not discard a later result
+        }
+        const event = parsed;
+        if (event.type === "step") setSteps((s) => ({ ...s, [event.id]: { status: event.status, detail: event.detail } }));
+        else if (event.type === "result") {
+          gotResult = true;
+          setPlan(event.plan);
+          const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          setTimeout(() => resultRef.current?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" }), 60);
+        } else if (event.type === "error") throw new Error(event.message);
+      };
       for (;;) {
         const { value, done } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+        buffer += decoder.decode(value, { stream: !done });
         let nl: number;
         while ((nl = buffer.indexOf("\n")) !== -1) {
-          const line = buffer.slice(0, nl).trim();
+          handle(buffer.slice(0, nl));
           buffer = buffer.slice(nl + 1);
-          if (!line) continue;
-          const event = JSON.parse(line) as AnalyzeEvent;
-          if (event.type === "step") setSteps((s) => ({ ...s, [event.id]: { status: event.status, detail: event.detail } }));
-          else if (event.type === "result") {
-            setPlan(event.plan);
-            setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
-          } else if (event.type === "error") throw new Error(event.message);
         }
+        if (done) break;
+      }
+      handle(buffer);
+      if (!gotResult && !controller.signal.aborted) {
+        throw new Error(lang === "hi" ? "कनेक्शन बीच में टूट गया। कृपया दोबारा कोशिश करें।" : "The connection ended before the plan was ready. Please try again.");
       }
     } catch (err) {
       if (!controller.signal.aborted) setError(err instanceof Error ? err.message : "Something went wrong");
@@ -295,62 +426,69 @@ export default function HaqApp() {
 
   return (
     <>
-      <div className="nav-wrap no-print">
-        <nav className="nav-pill" aria-label="Primary">
-          <a href="#top" className="nav-link" aria-label="Haq, home" style={{ padding: "6px 8px 6px 0", display: "inline-flex", alignItems: "center" }}>
+      <div className={`nav no-print${scrolled ? " is-scrolled" : ""}`}>
+        <nav className="wrap nav-inner" aria-label="Primary">
+          <a href="#top" className="nav-brand" aria-label="Haq, home">
             <Mark />
             <span>Haq</span>
           </a>
-          <a href="#how" className="nav-link nav-link--optional">
-            {lang === "hi" ? "कैसे" : "How it works"}
-          </a>
-          <a href="#coverage" className="nav-link nav-link--optional">
-            {lang === "hi" ? "दायरा" : "Coverage"}
-          </a>
-          <button type="button" className="nav-link" style={{ background: "none", border: 0, cursor: "pointer" }} onClick={() => setLang(lang === "en" ? "hi" : "en")} aria-label="Switch language">
-            {lang === "en" ? "हिन्दी" : "English"}
-          </button>
-          <button type="button" className="btn btn--secondary" style={{ marginLeft: 4 }} onClick={() => setShowSettings((v) => !v)} aria-expanded={showSettings}>
-            API key
-          </button>
+          <div className="nav-links">
+            <a href="#how" className="nav-link">
+              {t.navHow}
+            </a>
+            <a href="#coverage" className="nav-link">
+              {t.navCoverage}
+            </a>
+          </div>
+          <div className="nav-end">
+            <button type="button" className="nav-link" onClick={() => setLang(lang === "en" ? "hi" : "en")} aria-label={lang === "en" ? "Switch to Hindi" : "Switch to English"}>
+              {t.navLang}
+            </button>
+            <button type="button" className="btn btn--sm" onClick={() => setShowSettings((v) => !v)} aria-expanded={showSettings} aria-haspopup="dialog">
+              {t.navKey}
+            </button>
+          </div>
         </nav>
       </div>
 
       {showSettings && <SettingsPanel apiKey={apiKey} setApiKey={setApiKey} onClose={() => setShowSettings(false)} />}
 
-      <header id="top" className="hero hero--inset haq-hero no-print">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="scene" src="/scenes/meadow.svg" alt="" />
-        <div className="hero-inner">
-          <div className="card-frosted stack-16">
-            <h1 className="t-display t-balance">{t.heroTitle}</h1>
-            <p className="t-body" style={{ color: "inherit", maxWidth: "44ch" }}>
-              {t.heroBody}
-            </p>
+      <header id="top" className="hero no-print">
+        <div className="wrap grid-12 hero-grid">
+          <h1 className="t-display t-balance span-7">{t.heroTitle}</h1>
+          <div className="span-5 stack-24 hero-aside">
+            <p className="t-body">{t.heroBody}</p>
             <div className="row">
-              <a href="#intake" className="btn btn--on-dark btn--lg">
+              <a href="#intake" className="btn">
                 {t.heroCta}
               </a>
-              <a href="#how" className="link-arrow" style={{ color: "#ffffff" }}>
+              <a href="#how" className="link">
                 {t.heroLink}
                 <ArrowIcon />
               </a>
             </div>
           </div>
         </div>
+        <div className="wrap" style={{ marginTop: "clamp(40px, 6vw, 80px)" }}>
+          <div className="stats">
+            {t.stats.map((s) => (
+              <div key={s.num} className="stat">
+                <p className="stat-num">{s.num}</p>
+                <p className="t-caption stat-label">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </header>
 
       <main id="main">
-        <section id="intake" className="section no-print" style={{ scrollMarginTop: 80 }}>
+        <section id="intake" className="section no-print" style={{ scrollMarginTop: 72 }}>
           <div className="wrap grid-12">
             <div className="span-5 stack-16">
               <h2 className="t-heading t-balance">{t.intakeTitle}</h2>
               <p className="t-body t-measure t-muted">{t.intakeBody}</p>
               <ul className="list-rule" style={{ marginTop: 24 }}>
-                {(lang === "hi"
-                  ? ["सही मंच, सही क्रम में", "तारीख़ों के साथ योजना", "अंग्रेज़ी या हिंदी में ड्राफ़्ट"]
-                  : ["The right forum, in the right order", "A dated plan with every deadline", "A draft in English or Hindi"]
-                ).map((line) => (
+                {t.benefits.map((line) => (
                   <li key={line} className="t-body-sm">
                     {line}
                   </li>
@@ -359,7 +497,7 @@ export default function HaqApp() {
             </div>
 
             <div className="span-7">
-              <div className="card stack-16" style={{ padding: 24 }}>
+              <div className="card stack-16">
                 <div className="field">
                   <label className="field-label" htmlFor="story">
                     {t.intakeLabel}
@@ -384,16 +522,16 @@ export default function HaqApp() {
                     </p>
                   ) : (
                     <p className="field-hint" id="story-hint">
-                      {story.length}/4000 · {lang === "hi" ? "Ctrl + Enter से भेजें" : "Ctrl + Enter to submit"}
+                      {story.length}/4000 · {t.fieldHint}
                     </p>
                   )}
                 </div>
 
                 <div className="stack-8">
                   <p className="t-caption">{t.examples}</p>
-                  <div className="row" style={{ gap: 8 }}>
+                  <div className="row row--tight">
                     {EXAMPLES.map((ex) => (
-                      <button key={ex.label} type="button" className="tag" onClick={() => setStory(ex.story)}>
+                      <button key={ex.label} type="button" className="btn btn--outline btn--sm" onClick={() => setStory(ex.story)}>
                         {lang === "hi" ? ex.labelHi : ex.label}
                       </button>
                     ))}
@@ -401,9 +539,9 @@ export default function HaqApp() {
                 </div>
 
                 <div className="row" style={{ justifyContent: "flex-end", paddingTop: 8 }}>
-                  <button type="button" className="btn btn--primary btn--lg" onClick={analyze} disabled={busy} aria-busy={busy || undefined}>
+                  {/* Clay marks the single most consequential action; once a plan exists, drafting takes it over. */}
+                  <button type="button" className={plan ? "btn" : "btn btn--clay"} onClick={analyze} disabled={busy} aria-busy={busy || undefined}>
                     {busy ? `${t.analyzing}…` : t.analyze}
-                    {!busy && <ArrowCircle />}
                   </button>
                 </div>
               </div>
@@ -413,24 +551,14 @@ export default function HaqApp() {
                   {(Object.keys(STEP_LABELS) as StepId[]).map((id, i) => {
                     const s = steps[id];
                     return (
-                      <li key={id} className="flex items-start gap-3">
+                      <li key={id} className="step">
                         <span className="numeral">{i + 1}</span>
-                        <div className="min-w-0 flex-1">
-                          <div className="row" style={{ justifyContent: "space-between", gap: 8 }}>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <div className="row row--between row--tight">
                             <span className="t-label">{STEP_LABELS[id][lang]}</span>
-                            {s?.status === "done" ? (
-                              <span className="tag tag--moss">
-                                <span className="dot" />
-                                {lang === "hi" ? "पूरा" : "Done"}
-                              </span>
-                            ) : s ? (
-                              <span className="tag tag--blue">
-                                <span className="dot" />
-                                {t.analyzing}
-                              </span>
-                            ) : (
-                              <span className="tag">{lang === "hi" ? "प्रतीक्षा" : "Waiting"}</span>
-                            )}
+                            <span className={s?.status === "done" ? "badge" : "badge badge--soft"}>
+                              {s?.status === "done" ? t.done : s ? `${t.analyzing}…` : t.waiting}
+                            </span>
                           </div>
                           {s?.detail && <p className="t-caption" style={{ marginTop: 6 }}>{s.detail}</p>}
                         </div>
@@ -444,26 +572,22 @@ export default function HaqApp() {
         </section>
 
         {plan && (
-          <section ref={resultRef} className="section section--paper section--rule" style={{ scrollMarginTop: 72 }} aria-label={t.caseFile}>
+          <section ref={resultRef} className="section section--rule" style={{ scrollMarginTop: 72 }} aria-label={t.caseFile}>
             <Results plan={plan} story={story} lang={lang} t={t} headers={headers} />
           </section>
         )}
 
-        <HowItWorks />
-        <Coverage />
+        <HowItWorks t={t} />
+        <Coverage t={t} lang={lang} />
 
-        <section className="section no-print" aria-label="Cyber fraud">
+        <section className="section section--rule no-print" aria-label={t.scamTitle}>
           <div className="wrap">
-            <div className="card-atmos stack-16">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="scene" src="/scenes/sky.svg" alt="" />
-              <h2 className="t-heading-lg t-measure-narrow t-balance">Lost money to a scam? Call 1930 before anything else.</h2>
-              <p className="t-body t-measure">
-                Funds can often be frozen in the fraudster&apos;s account if the report reaches the cyber-crime helpline within hours. Report it, then come back here for the bank complaint and the zero-liability deadline.
-              </p>
+            <div className="featured stack-24">
+              <h2 className="t-heading-lg t-measure-narrow t-balance">{t.scamTitle}</h2>
+              <p className="t-body t-measure">{t.scamBody}</p>
               <div className="row">
-                <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" className="btn btn--on-dark btn--lg">
-                  Open cybercrime.gov.in
+                <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" className="btn">
+                  {t.scamCta}
                 </a>
               </div>
             </div>
@@ -472,30 +596,50 @@ export default function HaqApp() {
       </main>
 
       <footer className="footer no-print">
-        <div className="wrap stack-48">
-          <p className="footer-statement">Every consumer in India has rights. Few know where to use them.</p>
-          <div className="grid-12" style={{ alignItems: "end" }}>
-            <div className="span-7 stack-12">
-              <p className="footer-meta t-measure">{t.disclaimer}</p>
-              <p className="footer-meta">Built by Team AlphaFire for the BharatCode Build League · Powered by the BharatCode model API · MIT licence</p>
+        <div className="wrap">
+          <div className="grid-12">
+            <p className="footer-statement span-7">{t.footStatement}</p>
+            <div className="span-5 footer-cols">
+              <div>
+                <p className="footer-head">{t.footProject}</p>
+                <ul className="footer-links">
+                  <li>
+                    <a href={REPO_URL} target="_blank" rel="noreferrer">
+                      {t.footSource}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://bharatcode.ai/hackathon" target="_blank" rel="noreferrer">
+                      {t.footLeague}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="footer-head">{t.footHelp}</p>
+                <ul className="footer-links">
+                  <li>
+                    <a href="https://consumerhelpline.gov.in" target="_blank" rel="noreferrer">
+                      {t.footNch}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer">
+                      {t.footCyber}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://edaakhil.nic.in" target="_blank" rel="noreferrer">
+                      {t.footEdaakhil}
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <ul className="footer-links span-5" style={{ justifyContent: "flex-end" }}>
-              <li>
-                <a href={REPO_URL} target="_blank" rel="noreferrer">
-                  Source on GitHub
-                </a>
-              </li>
-              <li>
-                <a href="https://bharatcode.ai/hackathon" target="_blank" rel="noreferrer">
-                  BharatCode Build League
-                </a>
-              </li>
-              <li>
-                <a href="https://consumerhelpline.gov.in" target="_blank" rel="noreferrer">
-                  National Consumer Helpline
-                </a>
-              </li>
-            </ul>
+          </div>
+          <div className="footer-bottom stack-8">
+            <p className="footer-meta">{t.disclaimer}</p>
+            <p className="footer-meta">{t.footBuilt}</p>
           </div>
         </div>
       </footer>
@@ -507,15 +651,20 @@ export default function HaqApp() {
 
 function SettingsPanel({ apiKey, setApiKey, onClose }: { apiKey: string; setApiKey: (v: string) => void; onClose: () => void }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+
+  // Focus once on open; the close handler is read through a ref so a parent
+  // re-render (e.g. streaming progress) never steals focus back to the input.
   useEffect(() => {
     inputRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeRef.current();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, []);
 
   return (
-    <div className="card settings-pop stack-16 no-print" role="dialog" aria-label="BharatCode API key" style={{ padding: 20 }}>
+    <div className="card settings-pop stack-16 no-print" role="dialog" aria-label="BharatCode API key">
       <div className="field">
         <label className="field-label" htmlFor="key">
           BharatCode API key
@@ -528,7 +677,7 @@ function SettingsPanel({ apiKey, setApiKey, onClose }: { apiKey: string; setApiK
       <div className="row" style={{ justifyContent: "flex-end" }}>
         <button
           type="button"
-          className="btn btn--secondary"
+          className="btn btn--outline"
           onClick={() => {
             setApiKey("");
             writeStorage(KEY_STORAGE, "");
@@ -538,7 +687,7 @@ function SettingsPanel({ apiKey, setApiKey, onClose }: { apiKey: string; setApiK
         </button>
         <button
           type="button"
-          className="btn btn--primary"
+          className="btn"
           onClick={() => {
             writeStorage(KEY_STORAGE, apiKey.trim());
             onClose();
@@ -571,9 +720,9 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
     <div className="wrap stack-48">
       <div className="grid-12">
         <div className="span-8 stack-12">
-          <div className="row" style={{ gap: 8 }}>
-            <span className="t-caption">{t.caseFile}</span>
-            <span className={plan.mode === "ai" ? "tag tag--moss" : "tag"} title={plan.mode === "ai" ? "Classified by the BharatCode model" : "Classified by the offline rule engine"}>
+          <div className="row row--tight">
+            <span className="eyebrow">{t.caseFile}</span>
+            <span className="badge badge--soft" title={plan.mode === "ai" ? "Classified by the BharatCode model" : "Classified by the offline rule engine"}>
               {plan.mode === "ai" ? `BharatCode model · ${Math.round(intake.confidence * 100)}% confident` : "Offline mode"}
             </span>
           </div>
@@ -583,19 +732,13 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
       </div>
 
       {urgent.length > 0 && (
-        <div className="card card--urgent stack-12" role="alert" style={{ padding: 20 }}>
+        <div className="notice stack-16" role="alert">
           {urgent.map((d) => (
             <div key={d.label} className="stack-4">
-              <div className="row" style={{ gap: 8 }}>
-                <span className="tag tag--ember">
-                  <span className="dot" />
-                  {lang === "hi" ? "तुरंत" : "Urgent"}
-                </span>
-                <span className="t-label t-ink">
-                  {d.label}
-                  {d.date ? ` — ${formatDate(d.date, lang)}` : ""}
-                </span>
-              </div>
+              <p className="eyebrow">
+                {t.urgent} — {d.label}
+                {d.date ? ` · ${formatDate(d.date, lang)}` : ""}
+              </p>
               <p className="t-body-sm">{d.detail}</p>
             </div>
           ))}
@@ -603,29 +746,27 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
       )}
 
       <div className="stack-12">
-      <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Fact label={lang === "hi" ? "किसके ख़िलाफ़" : "Against"} value={intake.opposite_party ?? "—"} />
-        <Fact label={lang === "hi" ? "राशि" : "Amount"} value={intake.amount_inr !== null ? `₹${intake.amount_inr.toLocaleString("en-IN")}` : "—"} />
-        <Fact label={lang === "hi" ? "घटना" : "Incident"} value={formatDate(intake.incident_date, lang)} />
-        <Fact label={lang === "hi" ? "संदर्भ" : "References"} value={intake.reference_ids.join(", ") || "—"} />
-      </dl>
-      {plan.commission && (
-        <p className="t-caption">
-          <b style={{ fontWeight: 500, color: "var(--color-charcoal)" }}>{lang === "hi" ? "अगर मामला आयोग तक जाए:" : "If it reaches a commission:"}</b> {plan.commission.level}. {plan.commission.feeNote}
-        </p>
-      )}
+        <dl className="facts">
+          <Fact label={t.against} value={intake.opposite_party ?? "—"} />
+          <Fact label={t.amount} value={intake.amount_inr !== null ? `₹${intake.amount_inr.toLocaleString("en-IN")}` : "—"} />
+          <Fact label={t.incident} value={formatDate(intake.incident_date, lang)} />
+          <Fact label={t.refs} value={intake.reference_ids.join(", ") || "—"} />
+        </dl>
+        {plan.commission && (
+          <p className="t-caption">
+            <b style={{ fontWeight: 600, color: "var(--text)" }}>{t.commissionIf}</b> {plan.commission.level}. {plan.commission.feeNote}
+          </p>
+        )}
       </div>
 
       <div className="grid-12">
         <div className="span-7 stack-16">
-          <div className="row" style={{ justifyContent: "space-between" }}>
-            <h3 className="t-heading-sm">{t.ladder}</h3>
-          </div>
+          <h3 className="t-heading-sm">{t.ladder}</h3>
           <ol className="list-rule">
             {plan.steps.map((s) => (
-              <li key={s.id} className="flex gap-4">
+              <li key={s.id} className="step">
                 <span className="numeral">{s.order}</span>
-                <div className="min-w-0 flex-1 stack-8">
+                <div className="stack-8" style={{ minWidth: 0, flex: 1 }}>
                   <div>
                     <p className="t-subheading">{s.title}</p>
                     <p className="t-caption" style={{ marginTop: 4 }}>
@@ -638,34 +779,35 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
                     {s.escalateOn && (
                       <>
                         {" · "}
-                        {t.escalateOn} <span className="t-ink">{formatDate(s.escalateOn, lang)}</span>
+                        {t.escalateOn} <b style={{ fontWeight: 600, color: "var(--text)" }}>{formatDate(s.escalateOn, lang)}</b>
                       </>
                     )}
                   </p>
                   {(s.links.length > 0 || s.phones) && (
-                    <div className="row" style={{ gap: 8 }}>
+                    <div className="chips">
                       {s.links.map((l) => (
-                        <a key={l.url} href={l.url} target="_blank" rel="noreferrer" className="tag tag--blue">
+                        <a key={l.url} href={l.url} target="_blank" rel="noreferrer" className="link">
                           {l.label}
+                          <ArrowIcon />
                         </a>
                       ))}
                       {s.phones?.map((p) => (
-                        <a key={p} href={`tel:${p.replace(/[^\d]/g, "")}`} className="tag">
+                        <a key={p} href={`tel:${p.replace(/[^\d]/g, "")}`} className="link">
                           {p}
                         </a>
                       ))}
                     </div>
                   )}
-                  {s.note && <p className="t-caption" style={{ fontStyle: "italic" }}>{s.note}</p>}
+                  {s.note && <p className="t-caption t-italic">{s.note}</p>}
                 </div>
               </li>
             ))}
           </ol>
-          <div className="row no-print">
-            <button type="button" className="btn btn--secondary" onClick={() => downloadFile("haq-escalation-plan.ics", planToIcs(plan), "text/calendar")}>
+          <div className="row row--tight no-print">
+            <button type="button" className="btn btn--outline" onClick={() => downloadFile("haq-escalation-plan.ics", planToIcs(plan), "text/calendar")}>
               {t.calendar}
             </button>
-            <a className="btn btn--secondary" href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} target="_blank" rel="noreferrer">
+            <a className="btn btn--outline" href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} target="_blank" rel="noreferrer">
               {t.share}
             </a>
           </div>
@@ -677,11 +819,16 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
             <ul className="list-rule">
               {plan.deadlines.map((d) => (
                 <li key={d.label} className="stack-4">
-                  <div className="row" style={{ justifyContent: "space-between", gap: 8 }}>
-                    <span className={`t-label ${d.urgent ? "" : "t-ink"}`} style={d.urgent ? { color: "var(--color-ember)" } : undefined}>
+                  <div className="row row--between row--tight">
+                    <span className="t-label">
+                      {d.urgent && `${t.urgent} — `}
                       {d.label}
                     </span>
-                    {d.date && <span className="t-caption t-ink" style={{ fontVariantNumeric: "tabular-nums" }}>{formatDate(d.date, lang)}</span>}
+                    {d.date && (
+                      <span className="t-caption t-ink" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {formatDate(d.date, lang)}
+                      </span>
+                    )}
                   </div>
                   <p className="t-caption">{d.detail}</p>
                 </li>
@@ -690,7 +837,7 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
           </div>
 
           <div className="stack-16">
-            <div className="row" style={{ justifyContent: "space-between" }}>
+            <div className="row row--between row--tight">
               <h3 className="t-heading-sm">{t.evidence}</h3>
               <span className="t-caption">
                 {ready}/{plan.evidence.length}
@@ -701,15 +848,15 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
                 <li key={e} style={{ paddingBlock: 12 }}>
                   <label className="check">
                     <input type="checkbox" checked={!!checked[i]} onChange={() => setChecked((c) => ({ ...c, [i]: !c[i] }))} />
-                    <span style={checked[i] ? { color: "var(--color-ash)", textDecoration: "line-through" } : undefined}>{e}</span>
+                    <span style={checked[i] ? { color: "var(--text-soft)", textDecoration: "line-through" } : undefined}>{e}</span>
                   </label>
                 </li>
               ))}
             </ul>
             {intake.missing_info.length > 0 && (
-              <div className="card card--flat stack-8" style={{ background: "var(--color-linen)" }}>
+              <div className="panel stack-8">
                 <p className="t-label">{t.missing}</p>
-                <ul className="stack-4" style={{ paddingLeft: 18, listStyle: "disc" }}>
+                <ul className="stack-4" style={{ paddingLeft: 18, listStyle: "disc", margin: 0 }}>
                   {intake.missing_info.map((m) => (
                     <li key={m} className="t-body-sm">
                       {m}
@@ -755,11 +902,9 @@ function Results({ plan, story, lang, t, headers }: { plan: CasePlan; story: str
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="card card--flat stack-4" style={{ background: "var(--color-linen)" }}>
-      <dt className="t-caption">{label}</dt>
-      <dd className="t-subheading truncate" title={value} style={{ margin: 0 }}>
-        {value}
-      </dd>
+    <div>
+      <dt className="eyebrow">{label}</dt>
+      <dd>{value}</dd>
     </div>
   );
 }
@@ -823,15 +968,15 @@ function DraftPanel({ plan, story, lang, t, headers }: { plan: CasePlan; story: 
   }
 
   return (
-    <div className="card stack-24" style={{ padding: 24 }}>
+    <div className="card stack-24">
       <div className="no-print stack-16">
         <div className="stack-8">
           <h3 className="t-heading-sm">{t.draft}</h3>
           <p className="t-body-sm t-muted t-measure">{t.draftBody}</p>
         </div>
-        <div className="segmented" role="tablist" aria-label="Document type">
+        <div className="segmented" role="group" aria-label={lang === "hi" ? "दस्तावेज़ का प्रकार" : "Document type"}>
           {(Object.keys(DOC_LABELS) as DocType[]).map((d) => (
-            <button key={d} type="button" role="tab" aria-selected={docType === d} onClick={() => setDocType(d)}>
+            <button key={d} type="button" className="btn btn--outline btn--sm" aria-pressed={docType === d} onClick={() => setDocType(d)}>
               {DOC_LABELS[d][lang]}
             </button>
           ))}
@@ -849,9 +994,8 @@ function DraftPanel({ plan, story, lang, t, headers }: { plan: CasePlan; story: 
             </label>
             <input id="city" className="input" value={city} onChange={(e) => setCity(e.target.value)} maxLength={100} autoComplete="address-level2" />
           </div>
-          <button type="button" className="btn btn--primary btn--lg" onClick={generate} disabled={busy} aria-busy={busy || undefined}>
+          <button type="button" className="btn btn--clay" onClick={generate} disabled={busy} aria-busy={busy || undefined}>
             {busy ? `${t.analyzing}…` : draft ? t.regenerate : t.generate}
-            {!busy && <ArrowCircle />}
           </button>
         </div>
         {error && (
@@ -881,10 +1025,10 @@ function DraftPanel({ plan, story, lang, t, headers }: { plan: CasePlan; story: 
               <pre className="print-only" style={{ whiteSpace: "pre-wrap", fontFamily: "Georgia, serif", fontSize: "12pt", lineHeight: 1.6 }}>
                 {draft}
               </pre>
-              <div className="row no-print">
+              <div className="row row--tight no-print">
                 <button
                   type="button"
-                  className="btn btn--secondary"
+                  className="btn btn--outline"
                   onClick={async () => {
                     try {
                       await navigator.clipboard.writeText(draft);
@@ -897,10 +1041,10 @@ function DraftPanel({ plan, story, lang, t, headers }: { plan: CasePlan; story: 
                 >
                   {copied ? t.copied : t.copy}
                 </button>
-                <button type="button" className="btn btn--secondary" onClick={() => downloadFile(`haq-${docType}.txt`, draft, "text/plain;charset=utf-8")}>
+                <button type="button" className="btn btn--outline" onClick={() => downloadFile(`haq-${docType}.txt`, draft, "text/plain;charset=utf-8")}>
                   {t.download}
                 </button>
-                <button type="button" className="btn btn--secondary" onClick={() => window.print()}>
+                <button type="button" className="btn btn--outline" onClick={() => window.print()}>
                   {t.print}
                 </button>
               </div>
@@ -914,24 +1058,22 @@ function DraftPanel({ plan, story, lang, t, headers }: { plan: CasePlan; story: 
 
 /* ---------- editorial sections ---------- */
 
-function HowItWorks() {
+function HowItWorks({ t }: { t: Strings }) {
   return (
-    <section id="how" className="section section--paper section--rule no-print" style={{ scrollMarginTop: 72 }}>
+    <section id="how" className="section section--rule no-print" style={{ scrollMarginTop: 72 }}>
       <div className="wrap grid-12" style={{ alignItems: "center" }}>
         <div className="span-6 stack-16">
-          <p className="t-caption">How it works</p>
-          <h2 className="t-heading t-balance">The model reads and writes. It never decides where you go.</h2>
-          <p className="t-body t-measure">
-            An intake agent on the BharatCode model turns your words into facts. A rules file, reviewed by people, picks the forum, the order of escalation and the law. A planner computes the dates. A second agent drafts the letter from those facts alone.
-          </p>
-          <p className="t-body t-measure">If the model is unavailable, a rule-based classifier and template drafts take over, so the plan is always there.</p>
+          <p className="eyebrow">{t.howEyebrow}</p>
+          <h2 className="t-heading t-balance">{t.howTitle}</h2>
+          <p className="t-body t-measure">{t.howP1}</p>
+          <p className="t-body t-measure">{t.howP2}</p>
           <p className="figure-caption">
-            <b>Figure 1.</b> Two agents, one rules file. Helplines, sections and deadlines come only from the rules file, so they cannot be invented.
+            <b>{t.howFig}</b> {t.howFigText}
           </p>
         </div>
         <div className="span-6">
-          <figure className="card-diagram">
-            <PipelineDiagram />
+          <figure className="card">
+            <PipelineDiagram t={t} />
           </figure>
         </div>
       </div>
@@ -939,76 +1081,79 @@ function HowItWorks() {
   );
 }
 
-function PipelineDiagram() {
+function PipelineDiagram({ t }: { t: Strings }) {
+  const d = t.diagram;
   const box = (x: number, y: number, w: number, label: string, sub: string) => (
     <g key={label}>
-      <rect x={x} y={y} width={w} height="56" rx="8" fill="#ffffff" stroke="#282834" strokeWidth="1" />
-      <text x={x + w / 2} y={y + 24} textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="500" fill="#2c2c2c">
+      <rect x={x} y={y} width={w} height="56" rx="12" fill="#faf9f5" stroke="#141413" strokeWidth="1" />
+      <text x={x + w / 2} y={y + 24} textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="#141413">
         {label}
       </text>
-      <text x={x + w / 2} y={y + 42} textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fill="#646464">
+      <text x={x + w / 2} y={y + 42} textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fill="#3d3d3a">
         {sub}
       </text>
     </g>
   );
   return (
-    <svg viewBox="0 0 520 380" role="img" aria-label="Pipeline: your words go to the intake agent, then the rules file and planner, then the drafting agent, producing documents and reminders.">
+    <svg viewBox="0 0 520 380" role="img" aria-label={d.alt}>
       <defs>
         <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-          <path d="M0 0 8 4 0 8" fill="none" stroke="#282834" strokeWidth="1" />
+          <path d="M0 0 8 4 0 8" fill="none" stroke="#141413" strokeWidth="1" />
+        </marker>
+        <marker id="arr-soft" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+          <path d="M0 0 8 4 0 8" fill="none" stroke="#87867f" strokeWidth="1" />
         </marker>
       </defs>
-      <g fill="none" stroke="#282834" strokeWidth="1" markerEnd="url(#arr)">
+      <g fill="none" stroke="#141413" strokeWidth="1" markerEnd="url(#arr)">
         <path d="M260 66v34" />
         <path d="M260 156v34" />
         <path d="M200 218H150" />
         <path d="M260 246v34" />
       </g>
-      <path d="M360 128h75v56" fill="none" stroke="#b4b8b4" strokeDasharray="3 4" markerEnd="url(#arr)" />
-      <path d="M435 246v62h-69" fill="none" stroke="#b4b8b4" strokeDasharray="3 4" markerEnd="url(#arr)" />
-      {box(170, 10, 180, "Your words", "English · हिन्दी · Hinglish")}
-      {box(160, 100, 200, "Intake agent", "BharatCode model → JSON")}
-      {box(200, 190, 120, "Rules file", "forums · laws")}
-      {box(20, 190, 130, "Planner", "dates · tiers")}
-      {box(370, 190, 130, "Fallback", "if the model fails")}
-      {box(160, 280, 200, "Drafting agent", "streamed, grounded")}
-      <text x="260" y="372" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fill="#646464">
-        Complaint · Legal notice · Ombudsman text · Calendar reminders
+      <path d="M360 128h75v56" fill="none" stroke="#87867f" strokeDasharray="3 4" markerEnd="url(#arr-soft)" />
+      <path d="M435 246v62h-69" fill="none" stroke="#87867f" strokeDasharray="3 4" markerEnd="url(#arr-soft)" />
+      {box(170, 10, 180, d.words, d.wordsSub)}
+      {box(160, 100, 200, d.intake, d.intakeSub)}
+      {box(200, 190, 120, d.rules, d.rulesSub)}
+      {box(20, 190, 130, d.planner, d.plannerSub)}
+      {box(370, 190, 130, d.fallback, d.fallbackSub)}
+      {box(160, 280, 200, d.drafting, d.draftingSub)}
+      <text x="260" y="372" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fill="#3d3d3a">
+        {d.outputs}
       </text>
     </svg>
   );
 }
 
-function Coverage() {
+function Coverage({ t, lang }: { t: Strings; lang: Language }) {
   const rows = Object.values(KNOWLEDGE);
   return (
     <section id="coverage" className="section section--rule no-print" style={{ scrollMarginTop: 72 }}>
       <div className="wrap stack-32">
         <div className="grid-12">
           <div className="span-8 stack-12">
-            <p className="t-caption">Coverage</p>
-            <h2 className="t-heading-lg t-balance">Eight kinds of trouble, each with its own ladder.</h2>
+            <p className="eyebrow">{t.covEyebrow}</p>
+            <h2 className="t-heading-lg t-balance">{t.covTitle}</h2>
           </div>
         </div>
-        <div className="card card--flat" style={{ padding: 0, overflowX: "auto" }}>
-          <table className="table coverage-table">
+        <div className="card table-wrap">
+          <table className="table">
             <thead>
               <tr>
-                <th scope="col">Problem</th>
-                <th scope="col">First stop</th>
-                <th scope="col">Then</th>
-                <th scope="col">Key rule</th>
+                {t.covCols.map((c) => (
+                  <th key={c} scope="col">
+                    {c}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {rows.map((c) => (
                 <tr key={c.id}>
-                  <td className="t-ink" style={{ fontWeight: 500 }}>
-                    {c.label}
-                  </td>
+                  <td>{lang === "hi" ? c.labelHi : c.label}</td>
                   <td>{c.ladder[0].title}</td>
                   <td>{c.ladder.slice(1).map((s) => s.title.replace(/ —.*$/, "")).join(" → ")}</td>
-                  <td className="t-muted">{c.laws[0].name}</td>
+                  <td>{c.laws[0].name}</td>
                 </tr>
               ))}
             </tbody>

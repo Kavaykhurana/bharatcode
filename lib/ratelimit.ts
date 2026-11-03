@@ -21,5 +21,5 @@ export function rateLimit(key: string, limit = Number(process.env.RATE_LIMIT_PER
 }
 
 export function clientKey(headers: Headers): string {
-  return headers.get("x-forwarded-for")?.split(",")[0]?.trim() || headers.get("x-real-ip") || "anonymous";
+  return headers.get("cf-connecting-ip") || headers.get("x-forwarded-for")?.split(",")[0]?.trim() || headers.get("x-real-ip") || "anonymous";
 }

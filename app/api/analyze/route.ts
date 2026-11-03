@@ -44,7 +44,11 @@ export async function POST(req: Request) {
       } catch (err) {
         if (!req.signal.aborted) send({ type: "error", message: err instanceof Error ? err.message : "Something went wrong" });
       } finally {
-        controller.close();
+        try {
+          controller.close();
+        } catch {
+          // the client disconnected and cancelled the stream
+        }
       }
     }
   });

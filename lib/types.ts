@@ -13,6 +13,16 @@ export const CATEGORIES = [
 
 export type Category = (typeof CATEGORIES)[number];
 
+/** YYYY-MM-DD that is a real calendar day (rejects month-precision strings such as "2026-10-00"). */
+const IsoDate = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/)
+  .refine((v) => {
+    const [y, m, d] = v.split("-").map(Number);
+    const t = new Date(Date.UTC(y, m - 1, d));
+    return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d;
+  }, "Not a real calendar date");
+
 export const LanguageSchema = z.enum(["en", "hi"]);
 export type Language = z.infer<typeof LanguageSchema>;
 
@@ -22,10 +32,7 @@ export const IntakeSchema = z.object({
   summary: z.string().min(1).max(600),
   opposite_party: z.string().max(160).nullable(),
   amount_inr: z.number().nonnegative().max(1e12).nullable(),
-  incident_date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .nullable(),
+  incident_date: IsoDate.nullable(),
   already_complained: z.boolean(),
   reference_ids: z.array(z.string().max(80)).max(10),
   missing_info: z.array(z.string().max(200)).max(8),
@@ -37,10 +44,7 @@ export const AnalyzeRequestSchema = z.object({
   story: z.string().trim().min(20, "Describe the problem in at least 20 characters.").max(4000),
   language: LanguageSchema.default("en"),
   /** Client's local date (YYYY-MM-DD) so deadlines match the user's calendar. */
-  today: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional()
+  today: IsoDate.optional()
 });
 export type AnalyzeRequest = z.infer<typeof AnalyzeRequestSchema>;
 
@@ -58,10 +62,7 @@ export const DraftRequestSchema = z.object({
       city: z.string().trim().max(100).optional()
     })
     .default({}),
-  today: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional()
+  today: IsoDate.optional()
 });
 export type DraftRequest = z.infer<typeof DraftRequestSchema>;
 
