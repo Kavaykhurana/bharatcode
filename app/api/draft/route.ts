@@ -56,10 +56,7 @@ export async function POST(req: Request) {
         }
         if (produced.trim().length < 80) throw new LlmError("Model draft was empty");
       } catch {
-        if (req.signal.aborted) {
-          controller.close();
-          return;
-        }
+        if (req.signal.aborted) return; // closed in `finally`
         // Model unavailable or failed mid-way: replace with the deterministic template.
         const fallback = templateDraft(args);
         write(`${FALLBACK_MARKER}${fallback}`);

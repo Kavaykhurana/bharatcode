@@ -128,6 +128,10 @@ export async function* chatStream(
   const decoder = new TextDecoder();
   let buffer = "";
   for (;;) {
+    if (opts.signal?.aborted) {
+      await reader.cancel().catch(() => undefined);
+      return;
+    }
     const { value, done } = await reader.read();
     if (done) break;
     buffer += decoder.decode(value, { stream: true });

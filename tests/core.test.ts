@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { classifyOffline, extractAmount, extractDate, extractReferences } from "@/lib/heuristics";
 import { extractJsonObject, stripThinking, ThinkFilter } from "@/lib/json";
 import { commissionFor, KNOWLEDGE } from "@/lib/knowledge";
-import { addWorkingDays, buildPlan, planSteps } from "@/lib/planner";
+import { addWorkingDays, addYears, buildPlan, planSteps } from "@/lib/planner";
 import { planToIcs } from "@/lib/ics";
 import { templateDraft } from "@/lib/templates";
 import { CATEGORIES, IntakeSchema, type Intake } from "@/lib/types";
@@ -146,5 +146,40 @@ describe("outputs", () => {
     expect(text).toContain("15 days");
     const hi = templateDraft({ intake: intake(), docType: "company_complaint", language: "hi", complainant: { name: "Kavay" }, today: TODAY });
     expect(hi).toContain("विषय");
+  });
+});
+
+describe("regressions", () => {
+  it("does not read a word that starts with a unit as the unit", () => {
+    expect(extractAmount("₹4,500 credited to the wrong account")).toBe(4500); // was read as crore
+    expect(extractAmount("They kept ₹2,000 as a deposit")).toBe(2000);
+    expect(extractAmount("claim of Rs 1.8 lakhs")).toBe(180000);
+    expect(extractAmount("loss of ₹3 cr")).toBe(30_000_000);
+  });
+
+  it("only treats real month names as months", () => {
+    expect(extractDate("I paid 5 marketing fees", TODAY)).toBeNull();
+    expect(extractDate("on 3 September 2026", TODAY)).toBe("2026-09-03");
+    expect(extractDate("on 9 Sept 2026", TODAY)).toBe("2026-09-09");
+  });
+
+  it("matches short fraud and property words only as whole words", () => {
+    expect(classifyOffline("My hotpot order from Zomato never arrived", TODAY).category).toBe("ecommerce");
+    expect(classifyOffline("Flipkart refused the return, their return policy is unfair", TODAY).category).toBe("ecommerce");
+  });
+
+  it("adds calendar years without drifting across leap days", () => {
+    expect(addYears("2027-10-28", 2)).toBe("2029-10-28");
+    expect(addYears("2024-02-29", 2)).toBe("2026-02-28");
+    const plan = buildPlan(intake({ category: "ecommerce", incident_date: "2027-10-28" }), "2027-11-01", "ai");
+    expect(plan.deadlines.find((d) => d.label.includes("limitation"))!.date).toBe("2029-10-28");
+  });
+
+  it("folds calendar lines on UTF-8 octets, never mid-character", () => {
+    const hi = intake({ opposite_party: "बैंक ऑफ़ इंडिया", summary: "₹४,५०० डेबिट हुए लेकिन खाते में नहीं पहुँचे, शिकायत दर्ज की गई है" });
+    const ics = planToIcs(buildPlan(hi, TODAY, "ai"), new Date("2026-11-02T10:00:00Z"));
+    const enc = new TextEncoder();
+    expect(ics.split("\r\n").every((l) => enc.encode(l).length <= 75)).toBe(true);
+    expect(ics.replace(/\r\n /g, "")).toContain("बैंक ऑफ़ इंडिया");
   });
 });

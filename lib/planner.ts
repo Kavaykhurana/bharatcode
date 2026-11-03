@@ -28,6 +28,14 @@ export function addWorkingDays(iso: string, days: number): string {
   return toISODate(date);
 }
 
+/** Adds whole calendar years; 29 Feb rolls back to 28 Feb so a limitation date is never later than the law allows. */
+export function addYears(iso: string, years: number): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  const target = new Date(Date.UTC(y + years, m - 1, d));
+  if (target.getUTCMonth() !== m - 1) target.setUTCDate(0);
+  return toISODate(target);
+}
+
 export function daysBetween(fromIso: string, toIso: string): number {
   return Math.round((parseISODate(toIso).getTime() - parseISODate(fromIso).getTime()) / DAY_MS);
 }
@@ -92,7 +100,7 @@ export function computeDeadlines(intake: Intake, today: string): Deadline[] {
   }
 
   if (incident) {
-    const limitation = addDays(incident, 365 * 2);
+    const limitation = addYears(incident, 2);
     deadlines.push({
       label: "Consumer Commission limitation",
       date: limitation,

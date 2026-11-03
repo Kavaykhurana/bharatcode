@@ -7,7 +7,7 @@ import type { Category, Intake } from "./types";
 const RULES: { category: Category; patterns: RegExp[] }[] = [
   {
     category: "cyber_fraud",
-    patterns: [/fraud|scam|unauthori[sz]ed|hack|otp|phish|cheat|stolen|without my (consent|permission)|i didn'?t make|ठग|धोखा|फ्रॉड/i]
+    patterns: [/fraud|scam|unauthori[sz]ed|\bhack|\botp\b|phish|cheat|stolen|without my (consent|permission)|i didn'?t make|ठग|धोखा|फ्रॉड/i]
   },
   {
     category: "airline",
@@ -15,11 +15,11 @@ const RULES: { category: Category; patterns: RegExp[] }[] = [
   },
   {
     category: "insurance",
-    patterns: [/insur|policy|claim|cashless|tpa|premium|lic\b|bima|बीमा|क्लेम/i]
+    patterns: [/insur|\bpolicy (?:number|no)|insurance policy|\bclaim|cashless|tpa|premium|lic\b|bima|बीमा|क्लेम/i]
   },
   {
     category: "real_estate",
-    patterns: [/builder|flat|apartment|possession|rera|developer|allotment|plot|बिल्डर|फ्लैट/i]
+    patterns: [/builder|\bflat\b|apartment|possession|\brera\b|developer|allotment|\bplot\b|बिल्डर|फ्लैट/i]
   },
   {
     category: "telecom",
@@ -88,12 +88,12 @@ export function extractReferences(text: string): string[] {
 }
 
 export function extractAmount(text: string): number | null {
-  const m = text.match(/(?:₹|rs\.?|inr|rupees?)\s*([\d,]+(?:\.\d+)?)\s*(lakh|lac|crore|cr|k)?|([\d,]+(?:\.\d+)?)\s*(lakh|lac|crore|cr|k)?\s*(?:rupees|rs\b|₹|रुपये)/i);
+  const m = text.match(/(?:₹|rs\.?|inr|rupees?)\s*([\d,]+(?:\.\d+)?)(?:\s*(lakhs?|lacs?|crores?|cr|k)(?![a-z]))?|([\d,]+(?:\.\d+)?)(?:\s*(lakhs?|lacs?|crores?|cr|k)(?![a-z]))?\s*(?:rupees|rs\b|₹|रुपये)/i);
   if (!m) return null;
   const num = parseFloat((m[1] ?? m[3]).replace(/,/g, ""));
   if (!Number.isFinite(num)) return null;
   const unit = (m[2] ?? m[4] ?? "").toLowerCase();
-  const mult = unit === "k" ? 1e3 : unit === "lakh" || unit === "lac" ? 1e5 : unit === "crore" || unit === "cr" ? 1e7 : 1;
+  const mult = unit === "k" ? 1e3 : /^la/.test(unit) ? 1e5 : /^cr/.test(unit) ? 1e7 : 1;
   return Math.round(num * mult);
 }
 
@@ -109,9 +109,9 @@ export function extractDate(text: string, today: string): string | null {
     return safeDate(year, Number(dmy[2]), Number(dmy[1]));
   }
 
-  const named = text.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?,?\s*(20\d{2})?/i);
+  const named = text.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s+(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b\.?,?\s*(20\d{2})?/i);
   if (named) {
-    const month = MONTHS.indexOf(named[2].toLowerCase()) + 1;
+    const month = MONTHS.indexOf(named[2].toLowerCase().slice(0, 3)) + 1;
     let year = named[3] ? Number(named[3]) : Number(today.slice(0, 4));
     const candidate = safeDate(year, month, Number(named[1]));
     if (!named[3] && candidate && candidate > today) year -= 1;
